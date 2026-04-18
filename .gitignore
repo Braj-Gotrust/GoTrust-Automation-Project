@@ -1,0 +1,41 @@
+# Virtual Environment
+.venv/
+venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+.Python
+.pytest_cache/
+
+# Test / Reports
+reports/
+test-results/
+playwright-report/
+
+# Logs
+*.log
+
+# Environment / Secrets
+.env
+.env.*
+
+# Config files (only if sensitive)
+# config.py
+
+# Test data (only if not needed in repo)
+# testdata/
+
+# IDE / Editor
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
