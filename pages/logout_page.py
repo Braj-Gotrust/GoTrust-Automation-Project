@@ -56,7 +56,7 @@ class LogoutPage:
         time.sleep(1)
         self.click_sign_out_btn()
         time.sleep(1)
-        self.click_confirm_sign_out_btn()
+        #self.click_confirm_sign_out_btn()
 
         return self.sign_out_msg
 

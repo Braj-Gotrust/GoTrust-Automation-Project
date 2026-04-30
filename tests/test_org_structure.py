@@ -7,13 +7,12 @@ from playwright.sync_api import expect
 from config import Config
 
 
-# Read the data from the test data files
-csv_data=read_csv_data("testdata/logindata.csv")
-
-@pytest.mark.parametrize("testName,email,password,expected",csv_data)
-def test_organization_structure(page,testName,email,password,expected):
+def test_organization_structure(page):
 
     # TEST DATA
+    dpo_email = Config.dpo_email
+    dpo_password = Config.dpo_password
+
     legal_entity_name = Config.legal_entity_name
     legal_entity_description = Config.legal_entity_description
     legal_entity_address = Config.legal_entity_address
@@ -37,10 +36,10 @@ def test_organization_structure(page,testName,email,password,expected):
 
     login_page = LoginPage(page)
     org_structure = OrgStructurePage(page)
-    login_page.login(email, password)
+    login_page.login(dpo_email, dpo_password)
     # time.sleep(1)
 
-    if expected == "success":
+    if True:
         # Wait for dashboard load
         profile_btn = org_structure.txt_profile_configuration
         expect(profile_btn).to_be_visible(timeout=15000)

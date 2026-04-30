@@ -29,7 +29,7 @@ playwright-report/
 # config.py
 
 # Test data (only if not needed in repo)
-# testdata/
+testdata/
 
 # IDE / Editor
 .idea/
@@ -39,3 +39,6 @@ playwright-report/
 .DS_Store
 Thumbs.db
 *.swp
+
+# config
+config.py

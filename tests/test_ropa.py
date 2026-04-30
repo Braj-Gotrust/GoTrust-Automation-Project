@@ -185,8 +185,7 @@ def test_ropa(page):
         # reviewer 2 acknowledge (submit) and get confirmation message
         expect(ropa.click_reviewer_acknowledge_btn_and_get_msg()).to_be_visible(timeout=15000)
 
-        # REVIEWER 2 SIGN OUT
-        logout_page.signout()
+
 
 
 

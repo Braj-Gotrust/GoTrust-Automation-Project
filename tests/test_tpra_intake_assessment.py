@@ -32,38 +32,22 @@ def test_tpra_intake_assessment(page):
     reviewer_1_email = Config.reviewer_1_email
     reviewer_1_password = Config.reviewer_1_password
 
-    reviewer_2_email = Config.reviewer_2_email
-    reviewer_2_password = Config.reviewer_2_password
-
-    processing_activity_name = Config.processing_activity_name
-    processing_activity_description = Config.processing_activity_description
-
-
-    is_future = True
-    month_year = Config.month_and_year
-    date = Config.date
-
-
-
-
-
 
 
     login_page = LoginPage(page)
-    #login_page.login(dpo_email, dpo_password)
+    login_page.login(dpo_email, dpo_password)
     #login_page.login(collaborator_email, collaborator_password)
     #login_page.login(assignee_email, assignee_password)
-    login_page.login(reviewer_1_email, reviewer_1_password)
+    #login_page.login(reviewer_1_email, reviewer_1_password)
     #login_page.login(reviewer_2_email, reviewer_2_password)
 
-    ropa = RopaPage(page)
     tpra = TpraPage(page)
 
     logout_page = LogoutPage(page)
 
 
     if True:
-        '''
+
         # verify TPRA button
         expect(tpra.tpra_btn).to_be_visible(timeout=15000)
 
@@ -74,8 +58,8 @@ def test_tpra_intake_assessment(page):
         expect(tpra.get_tpra_title()).to_be_visible(timeout=15000)
 
         # fill vendor details
-        # tpra.fill_vendor_details(vendor_name, vendor_email, vendor_address, vendor_admin_name, vendor_phone_number, legal_entity_name)
-        # expect(tpra.get_vendor_add_confi_msg()).to_be_visible(timeout=15000)
+        tpra.fill_vendor_details(vendor_name, vendor_email, vendor_address, vendor_admin_name, vendor_phone_number, legal_entity_name)
+        expect(tpra.get_vendor_add_confi_msg()).to_be_visible(timeout=15000)
 
         # select vendor assessment name under the "TPRA Dashboard"
         tpra.select_vendor_name_assessment(vendor_name)
@@ -95,6 +79,7 @@ def test_tpra_intake_assessment(page):
 
         # COLLABORATOR SIGN IN
         login_page.login(collaborator_email, collaborator_password)
+        
 
         # click on ropa
         tpra.click_tpra_btn()
@@ -128,9 +113,9 @@ def test_tpra_intake_assessment(page):
 
         # REVIEWER SIGN IN
         login_page.login(reviewer_1_email, reviewer_1_password)
-        '''
 
-        # click on ropa
+
+        # click on tpra
         tpra.click_tpra_btn()
         # select vendor assessment name under the "TPRA Dashboard"
         tpra.select_vendor_name_assessment(vendor_name)
@@ -138,17 +123,36 @@ def test_tpra_intake_assessment(page):
         tpra.select_vendor_assessment()
         # reviewer review all questions and answers
         tpra.review_questions_and_answers()
+        # save
+        tpra.click_save_btn()
 
+        # REVIEWER SIGN OUT
+        logout_page.signout()
 
+        # DPO SIGN IN
+        login_page.login(dpo_email, dpo_password)
 
-
+        # click on tpra
+        tpra.click_tpra_btn()
+        # select vendor assessment name under the "TPRA Dashboard"
+        tpra.select_vendor_name_assessment(vendor_name)
+        # select vendor assessment under the 'vendor assessment name'
+        tpra.select_vendor_assessment()
+        # save
+        tpra.click_save_btn()
+        # submit
+        tpra.click_submit_btn()
+        expect(tpra.get_submit_dpo_msg()).to_be_visible(timeout=15000)
+        expect(tpra.get_dd_popup_modal()).to_be_visible(timeout=15000)
+        # select dd template
+        tpra.select_dd_temp()
+        expect(tpra.get_start_assessment_msg()).to_be_visible(timeout=15000)
 
 
 
 
 
         page.wait_for_timeout(5000)
-
 
     else:
         # Invalid login validation

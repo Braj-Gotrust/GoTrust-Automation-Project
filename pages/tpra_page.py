@@ -63,16 +63,16 @@ class TpraPage:
         self.submit_for_review_btn = page.locator("button:has-text('Submit for Review')")
         # reviewer review all questions and answers
         self.all_yes_button = page.locator("label:has-text('Yes')")
+        self.submit_btn = page.locator("button:has-text('Submit')")
+        self.submit_dpo_msg = page.get_by_text("Assessment reviewed successfully")
+        # DD popup modal
+        self.dd_popup_modal = page.locator("button:has-text('Proceed to Due Diligence')")
+        self.dd_temp_txt = page.get_by_label("DUE Diligence ( Default )")
+        self.continue_btn = page.locator("button:has-text('Continue')")
+        self.start_assessment_msg = page.get_by_text("Assessment Started Successfully")
 
 
-    def review_questions_and_answers(self):
-        try:
-            count_yes_btn = self.all_yes_button.count()
-            for i in range(count_yes_btn):
-                self.all_yes_button.nth(i).click()
-        except Exception as e:
-            print(f" Exception while review all questions and answers : {e}")
-            raise
+
 
 
     def click_tpra_btn(self):
@@ -288,6 +288,7 @@ class TpraPage:
         try:
             self.vendor.first.wait_for(state="visible", timeout=15000)
             self.vendor_assess_txt.nth(0).click()
+            time.sleep(2)
         except Exception as e:
             print(f" Exception while selection vendor assessment : {e}")
             raise
@@ -384,3 +385,55 @@ class TpraPage:
         except Exception as e:
             print(f" Exception while click on submit for review button : {e}")
             raise
+
+    def review_questions_and_answers(self):
+        try:
+            count_yes_btn = self.all_yes_button.count()
+            for i in range(count_yes_btn):
+                self.all_yes_button.nth(i).click()
+        except Exception as e:
+            print(f" Exception while review all questions and answers : {e}")
+            raise
+
+
+    def click_submit_btn(self):
+        try:
+            self.submit_btn.click()
+        except Exception as e:
+            print(f" Exception while click on submit button : {e}")
+            raise
+
+    def get_submit_dpo_msg(self):
+        try:
+            return self.submit_dpo_msg
+        except Exception as e:
+            print(f" Exception while getting submit confirmation message: {e}")
+            return None
+
+    def get_dd_popup_modal(self):
+        try:
+            return self.dd_popup_modal
+        except Exception as e:
+            print(f" Exception while getting Proceed to Due Diligence button: {e}")
+            return None
+
+    def select_dd_temp(self):
+        try:
+            self.dd_popup_modal.click()
+            self.dd_temp_txt.click()
+            self.continue_btn.click()
+            time.sleep(2)
+        except Exception as e:
+            print(f" Exception while click on Proceed to Due Diligence button : {e}")
+            raise
+
+    def get_start_assessment_msg(self):
+        try:
+            return self.start_assessment_msg
+        except Exception as e:
+            print(f" Exception while getting start assessment message : {e}")
+            return None
+
+
+
+
