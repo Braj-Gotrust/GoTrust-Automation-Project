@@ -1,2 +1,0 @@
-testName,email,password,expected
-Valid login,dpo.preprod@yopmail.com,Test@123,success
