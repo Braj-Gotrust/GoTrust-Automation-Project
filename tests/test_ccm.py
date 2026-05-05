@@ -72,6 +72,17 @@ def test_ccm(page):
         ccm.click_compliance_tab()
         ccm.fill_observation_details()
         expect(ccm.get_add_observation_confi_msg()).to_be_visible(timeout=15000)
+        # add duty
+        ccm.fill_duty_details()
+        expect(ccm.get_add_duty_confi_msg()).to_be_visible(timeout=15000)
+        # add action
+        ccm.fill_action_details()
+        expect(ccm.get_add_action_confi_msg()).to_be_visible(timeout=15000)
+
+        # recommendations tab
+        ccm.click_recommendations_tab()
+
+
 
 
 

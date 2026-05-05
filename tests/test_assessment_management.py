@@ -13,7 +13,8 @@ def test_assessment_management(page):
 
     assessment_name = Config.assessment_name
     assessment_description = Config.assessment_description
-    legal_entity_name = Config.legal_entity_name
+    #legal_entity_name = Config.legal_entity_name
+    legal_entity_name = "GoTrust"
 
     assignee_name = Config.assignee_name
     reviewer_name = Config.reviewer_1_name

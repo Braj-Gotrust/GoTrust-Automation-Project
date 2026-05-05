@@ -37,7 +37,6 @@ def test_organization_structure(page):
     login_page = LoginPage(page)
     org_structure = OrgStructurePage(page)
     login_page.login(dpo_email, dpo_password)
-    # time.sleep(1)
 
     if True:
         # Wait for dashboard load

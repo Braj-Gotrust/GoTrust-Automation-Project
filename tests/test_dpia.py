@@ -12,7 +12,8 @@ def test_dpia(page):
 
     dpia_assessment_name = Config.dpia_assessment_name
     dpia_assessment_description = Config.dpia_assessment_description
-    legal_entity_name = Config.legal_entity_name
+    #legal_entity_name = Config.legal_entity_name
+    legal_entity_name = "GoTrust"
 
     assignee_name = Config.assignee_name
     reviewer_name = Config.reviewer_1_name
