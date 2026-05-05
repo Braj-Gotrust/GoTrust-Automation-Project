@@ -1,9 +1,5 @@
-import re
 import time
-from os import name
-
-from playwright.sync_api import Page,expect
-
+from playwright.sync_api import Page
 class CcmPage:
     def __init__(self,page: Page):
         self.page = page
@@ -54,39 +50,32 @@ class CcmPage:
         self.observation_txt = page.locator("span:has-text('Add Audit Observation')")
         self.save_btn = page.locator("button:has-text('Save')")
         self.add_observation_confi_msg = page.get_by_text("Observation added successfully")
+        # add duty
         self.observation_add_btn = page.locator("button[aria-haspopup='dialog']")
         self.add_duty_txt = page.locator("button:has-text('Add duty')")
         self.duty_title_txt = page.get_by_placeholder("Duty Title")
         self.add_assignee_txt = page.locator("span:has-text('Select Assignee')")
-        self.select_assignee_txt = page.locator("div[role='group'] span")
-        # due a date
+        # due date
         self.pick_date_start_txt = page.locator("button:has-text('Pick a date')")
         self.next_month_txt = page.locator("button[name='next-month']")
         self.date_15 = page.get_by_role("gridcell", name="15")
+        self.entity_txt = page.get_by_label("Entity")
+        self.standards_txt= page.get_by_placeholder("Enter your standards here...")
+        self.comment_txt = page.get_by_placeholder("Enter your comments here...")
+        self.add_btn = page.locator("button.gotrust-button:has-text('Add')")
+        self.add_duty_confi_msg = page.get_by_text("Duty is created successfully")
+        # add action
+        self.add_action_txt = page.locator("button:has-text('Add action')")
+        self.category_txt = page.get_by_placeholder("Category")
+        self.description_txt_placeholder = page.get_by_placeholder("Description")
+        self.assigned_by_txt = page.get_by_label("Assigned by")
+        self.assigned_to_txt = page.get_by_label("Assigned To")
+        self.add_action_confi_msg = page.get_by_text("Action Added Successfully")
+        # select recommendations tab
+        self.recommendations_tab = page.locator("button:has-text('Recommendations')")
 
+        page.locator("button:has-text('Category')")
 
-    def select_pick_date_start(self):
-        try:
-            self.pick_date_start_txt.nth(0).click()
-            self.next_month_txt.click()
-            self.date_15.click()
-        except Exception as e:
-            print(f" Exception while selecting date for start assessment : {e}")
-            raise
-
-    def fill_duty_details(self):
-        try:
-            self.observation_add_btn.nth(0).click()
-            self.add_duty_txt.click()
-            self.duty_title_txt.fill("duty")
-            self.add_assignee_txt.click()
-            self.select_assignee_txt.nth(1).click()
-            self.close_btn.click()
-            self.select_pick_date_start()
-            time.sleep(1)
-        except Exception as e:
-            print(f" Exception while click on compliance tab : {e}")
-            raise
 
     def click_ccm_btn(self):
         try:
@@ -290,6 +279,7 @@ class CcmPage:
 
     def fill_observation_details(self):
         try:
+            time.sleep(3)
             self.observation_txt.nth(0).click()
             self.description_txt.fill("observation")
             self.save_btn.click()
@@ -305,7 +295,83 @@ class CcmPage:
             print(f" Exception while getting observation added confirmation successful message : {e}")
             return None
 
+    def fill_duty_details(self):
+        try:
+            self.observation_add_btn.nth(0).click()
+            self.add_duty_txt.click()
+            self.duty_title_txt.fill("duty")
+            self.add_assignee_txt.click()
+            self.dropdown.nth(1).click()
+            self.close_btn.click()
+            self.select_pick_date_start()
+            self.select_entity()
+            self.standards_txt.fill("standards")
+            self.comment_txt.fill("comments")
+            self.add_btn.click()
+            time.sleep(3)
+        except Exception as e:
+            print(f" Exception while click on compliance tab : {e}")
+            raise
 
+    def select_pick_date_start(self):
+        try:
+            self.pick_date_start_txt.nth(0).click()
+            self.next_month_txt.click()
+            self.date_15.click()
+        except Exception as e:
+            print(f" Exception while selecting date for start assessment : {e}")
+            raise
+
+    def select_entity(self):
+        try:
+            self.entity_txt.click()
+            self.dropdown.nth(1).click()
+            time.sleep(1)
+        except Exception as e:
+            print(f" Exception while selecting date for start assessment : {e}")
+            raise
+
+    def get_add_duty_confi_msg(self):
+        try:
+            return self.add_duty_confi_msg
+        except Exception as e:
+            print(f" Exception while getting add duty confirmation successful message : {e}")
+            return None
+
+    def fill_action_details(self):
+        try:
+            self.observation_add_btn.nth(0).click()
+            self.add_action_txt.click()
+            self.category_txt.fill("category")
+            self.description_txt_placeholder.fill("test")
+            self.select_entity()
+            self.select_pick_date_start()
+            self.assigned_by_txt.click()
+            self.dropdown.nth(1).click()
+            self.assigned_to_txt.click()
+            self.dropdown.nth(1).click()
+            self.select_pick_date_start()
+            time.sleep(1)
+            self.select_pick_date_start()
+            self.add_btn.click()
+            time.sleep(1)
+        except Exception as e:
+            print(f" Exception while fill action details : {e}")
+            raise
+
+    def get_add_action_confi_msg(self):
+        try:
+            return self.add_action_confi_msg
+        except Exception as e:
+            print(f" Exception while getting add action confirmation successful message : {e}")
+            return None
+
+    def click_recommendations_tab(self):
+        try:
+            self.recommendations_tab.click()
+        except Exception as e:
+            print(f" Exception while click on recommendations tab : {e}")
+            raise
 
 
 

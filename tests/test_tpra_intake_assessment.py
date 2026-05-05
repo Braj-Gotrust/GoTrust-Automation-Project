@@ -16,7 +16,8 @@ def test_tpra_intake_assessment(page):
     vendor_address = Config.vendor_address
     vendor_admin_name = Config.vendor_admin_name
     vendor_phone_number = Config.vendor_phone_number
-    legal_entity_name = Config.legal_entity_name
+    #legal_entity_name = Config.legal_entity_name
+    legal_entity_name = "GoTrust"
     vendor_assessment_description = Config.vendor_assessment_description
     spoc_name = Config.reviewer_2_name
     assignee_name = Config.assignee_name
