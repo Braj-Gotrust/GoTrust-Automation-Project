@@ -50,6 +50,7 @@ def test_ropa(page):
 
     if True:
 
+
         # verify ropa registry button
         expect(ropa.ropa_registry_btn).to_be_visible(timeout=15000)
 
@@ -114,6 +115,7 @@ def test_ropa(page):
 
         # LOGIN WITH COLLABORATOR ACCOUNT
         login_page.login(collaborator_email,collaborator_password)
+
 
         # click on ropa
         ropa.click_ropa_registry_btn()

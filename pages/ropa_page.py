@@ -50,6 +50,7 @@ class RopaPage:
         self.organization_role_txt = page.locator("span[style='pointer-events: none;'] span:has-text('Select organizational role')")
         self.select_role = page.locator("span:has-text('Fiduciary')").nth(0)
         self.update_btn = page.locator("button:has-text('Update')")
+        #self.update = page.get_by_text("Grounds for Processing Personal Data updated successfully.")
         self.update_msg = page.get_by_text("ROPA updated successfully")
 
         # data principal tagging
@@ -83,8 +84,8 @@ class RopaPage:
         self.edit_ropa_page_title = page.locator("h3:has-text('Create Processing Activity')")
 
         # Legal basis section
-        self.legal_basis_txt = page.locator("span:has-text('Legal Basis')")
-        self.legal_basis_for_india_txt = page.locator("span:has-text('Legal Basis for India')")
+        self.legal_basis_txt = page.locator("span:has-text('Grounds for Processing Personal Data')")
+        #self.legal_basis_for_india_txt = page.locator("span:has-text('Legal Basis for India')")
         self.checkbox_label = page.locator("label:has-text('Personal data voluntarily provided')")
         self.first_yes_button = page.locator(".inline-flex.items-center.gap-2 span:has-text('Yes')").nth(0)
         self.critical_modal = page.locator("h2:has-text('Set sensitivity to CRITICAL?')")
@@ -92,7 +93,7 @@ class RopaPage:
         self.critical_msg = page.get_by_text("Sensitivity set to CRITICAL")
         self.second_yes_button = page.locator(".inline-flex.items-center.gap-2 span:has-text('Yes')").nth(1)
         self.third_yes_button = page.locator(".inline-flex.items-center.gap-2 span:has-text('Yes')").nth(2)
-        self.legal_basis_update_msg = page.get_by_text("Legal Basis updated successfully.")
+        self.legal_basis_update_msg = page.get_by_text("Grounds for Processing Personal Data updated successfully.")
         # click on submit button
         self.collab_submit_for_review_btn = page.locator("button:has-text('Submit')")
         self.collab_submit_for_review_msg = page.get_by_text("Submitted as collaborator")
@@ -330,7 +331,8 @@ class RopaPage:
         try:
             self.data_principal_tagging_txt.click()
             self.data_principal_category_txt.click()
-            self.dropdown.first.click(force=True)
+            time.sleep(1)
+            self.dropdown.first.click()
             self.data_principal_txt.click()
             self.data_principal_list.nth(0).click()
             self.close.click()
@@ -404,8 +406,10 @@ class RopaPage:
 
     def legal_basis_section(self):
         try:
-            self.legal_basis_txt.click()
-            self.legal_basis_for_india_txt.click()
+            self.legal_basis_txt.nth(0).click()
+            self.legal_basis_txt.nth(1).click()
+            self.page.locator("button[role='checkbox']").nth(0).click()
+            #self.legal_basis_for_india_txt.click()
             checkbox = self.checkbox_label.locator("button[role='checkbox']")
             state = checkbox.get_attribute("aria-checked")
             if state == "false":

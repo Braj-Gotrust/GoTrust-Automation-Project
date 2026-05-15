@@ -1,12 +1,12 @@
+import re
+
 from pages.login_page import LoginPage
-from pages.logout_page import LogoutPage
-from pages.dpia_page import DpiaPage
 from pages.ccm_page import CcmPage
 from playwright.sync_api import expect
 from config import Config
 
 
-def test_ccm(page):
+def test_ccm_2(page):
     # TEST DATA
     dpo_email = Config.dpo_email
     dpo_password = Config.dpo_password
@@ -16,7 +16,8 @@ def test_ccm(page):
     cookie_policy_link= Config.cookie_policy_link
     legal_entity_name = Config.legal_entity_name
 
-    category_name = Config.category_name
+    #category_name = Config.category_name
+    category_name = "Essential"
     category_description = Config.category_description
 
     service_name = Config.services_name
@@ -25,6 +26,8 @@ def test_ccm(page):
     cookie_key_name = Config.cookie_key_name
     cookie_key_description = Config.cookie_key_description
 
+    file_path = Config.file_path
+
     login_page = LoginPage(page)
     login_page.login(dpo_email, dpo_password)
 
@@ -32,32 +35,23 @@ def test_ccm(page):
 
     if True:
 
-
-        # verify ccm button
-        expect(ccm.ccm_btn).to_be_visible(timeout=15000)
-
         # click on ccm
         ccm.click_ccm_btn()
-
-        # verify ccm title
-        expect(ccm.get_ccm_title()).to_be_visible(timeout=15000)
 
         # click on banner builder tab
         ccm.click_banner_builder_tab()
 
-        # fill domain details
-        ccm.fill_domain_details(domain_name, domain_url, cookie_policy_link)
-        expect(ccm.get_create_domain_confi_msg()).to_be_visible(timeout=15000)
-        ccm.click_scan_now_btn()
+        # STEP:1 - Basic Information
+        # select domain name
+        ccm.page_extend()
+        ccm.select_domain(domain_name)
+        expect(ccm.get_select_domain_name_confi()).to_be_visible(timeout=15000)
+        ccm.click_next_btn()
         ccm.click_next_btn()
 
-        # click on category and service tab
+        # STEP:3 - Categorize Cookie
+        # category and service tab
         ccm.click_category_and_service_tab()
-
-        # add category
-        ccm.fill_category_details(category_name, category_description)
-        expect(ccm.get_add_category_confi_msg()).to_be_visible(timeout=15000)
-
         # select category name
         ccm.select_category(category_name)
         ccm.fill_service_details(service_name, service_description)
@@ -81,13 +75,6 @@ def test_ccm(page):
 
         # recommendations tab
         ccm.click_recommendations_tab()
-
-
-
-
-
-
-
 
 
 
