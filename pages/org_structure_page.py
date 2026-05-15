@@ -17,7 +17,7 @@ class OrgStructurePage:
 
         # form locators
         self.txt_name = self.page.get_by_placeholder("Enter Legal Entity name")
-        self.txt_description = self.page.get_by_placeholder("Brief description")
+        self.txt_description = self.page.get_by_placeholder("Description")
         self.txt_company_address = self.page.get_by_placeholder("Full company address")
 
         # Countries dropdown
@@ -62,35 +62,35 @@ class OrgStructurePage:
         self.plus_btn_title = self.page.locator(".text-center h2")
         self.select_business_unit = self.page.locator("div span:has-text('Business Unit')")
         self.business_unit_name = self.page.get_by_placeholder("Enter Business Unit name")
-        self.business_unit_description = self.page.get_by_placeholder("Brief description")
+        self.business_unit_description = self.page.get_by_placeholder("description")
         self.create_business_unit_button = self.page.locator("button:has-text('Create Business Unit')")
         self.confirmation_msg = self.page.get_by_text("Business unit created successfully")
 
         # Department locators
         self.select_department = self.page.locator("div span:has-text('Department')")
         self.department_name = self.page.get_by_placeholder("Enter Department name")
-        self.department_description = self.page.get_by_placeholder("Brief description")
+        self.department_description = self.page.get_by_placeholder("description")
         self.create_department_button = self.page.locator("button:has-text('Create Department')")
         self.department_confirmation_msg = self.page.get_by_text("Department created successfully!")
 
         # product locators
         self.select_product = self.page.locator("div span:has-text('Product')")
         self.product_name = self.page.get_by_placeholder("Enter Product name")
-        self.product_description = self.page.get_by_placeholder("Brief description")
+        self.product_description = self.page.get_by_placeholder("description")
         self.create_product_button = self.page.locator("button:has-text('Create Product')")
         self.product_confirmation_msg = self.page.get_by_text("Product created successfully!")
 
         # service locators
         self.select_service = self.page.locator("div span:has-text('Service')")
         self.service_name = self.page.get_by_placeholder("Enter Service name")
-        self.service_description = self.page.get_by_placeholder("Brief description")
+        self.service_description = self.page.get_by_placeholder("description")
         self.create_service_button = self.page.locator("button:has-text('Create Service')")
         self.service_confirmation_msg = self.page.get_by_text("Service created successfully!")
 
         # business process locators
         self.select_business_process = self.page.locator("div span:has-text('Business Process')")
         self.business_process_name = self.page.get_by_placeholder("Enter Business Process name")
-        self.business_process_description = self.page.get_by_placeholder("Brief description")
+        self.business_process_description = self.page.get_by_placeholder("description")
         self.create_business_process_button = self.page.locator("button:has-text('Create Business Process')")
         self.business_process_confirmation_msg = self.page.get_by_text("Business process created successfully!")
 

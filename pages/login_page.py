@@ -13,7 +13,7 @@ class LoginPage:
         # locators
         self.txt_email_address = self.page.locator("#username")
         self.txt_password = self.page.locator("#password")
-        self.btn_login_button = self.page.locator("button[type='submit']")
+        self.btn_login_button = self.page.locator("button[type='submit']:has-text('Sign In'), input[type='submit'][value='Sign In']")
         self.txt_error_message = self.page.locator("div[aria-live='polite']")
 
     def set_email(self,email: str):
