@@ -38,8 +38,8 @@ class RopaPage:
         self.create_ropa_btn = page.locator("button:has-text('Create ROPA')")
         self.ropa_title = page.locator("h3:has-text('Create Processing Activity')")
         # add collaborator
-        self.add_collab_txt = page.locator("button:has-text('Add Collaborator')")
-        self.collaborator_popup = page.locator("h3:has-text('Assign Collaborators')")
+        self.add_collab_txt = page.locator("button:has-text('Collaborator')")
+        self.collaborator_popup = page.locator("h3:has-text('Create Processing Activity')")
 
         self.collab_dropdown_txt = page.locator("span:has-text('Select collaborators')")
         self.collaborator_list = page.locator("div[role='group'] span")
@@ -330,6 +330,7 @@ class RopaPage:
     def data_principal_tagging_section(self):
         try:
             self.data_principal_tagging_txt.click()
+            time.sleep(1)
             self.data_principal_category_txt.click()
             time.sleep(1)
             self.dropdown.first.click()

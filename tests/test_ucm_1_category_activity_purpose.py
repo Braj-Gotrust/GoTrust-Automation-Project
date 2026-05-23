@@ -19,26 +19,9 @@ def test_ucm_1(page):
     processing_activity_name_2 = Config.processing_activity_name_2
     processing_purpose_name = Config.processing_purpose_name
 
-    domain_name = Config.domain_name
-    domain_url = Config.domain_url
-    cookie_policy_link= Config.cookie_policy_link
-    legal_entity_name = Config.legal_entity_name
-
-    category_name = Config.category_name
-    category_description = Config.category_description
-
-    service_name = Config.services_name
-    service_description = Config.services_description
-
-    cookie_key_name = Config.cookie_key_name
-    cookie_key_description = Config.cookie_key_description
-
-    file_path = Config.file_path
-
     login_page = LoginPage(page)
     login_page.login(dpo_email, dpo_password)
 
-    #ccm = CcmPage(page)
     ucm = UcmPage(page)
 
     if True:
@@ -58,7 +41,7 @@ def test_ucm_1(page):
         # Pii Label tab
         ucm.fill_search_box(pii_label_name)
         expect(ucm.all_pii_label).to_be_visible(timeout=15000)
-        ucm.select_pii_label(pii_label_name)
+        ucm.select_pii_label_in_table(pii_label_name)
         ucm.click_save_btn()
         expect(ucm.get_pii_label_update_confi_msg()).to_be_visible(timeout=15000)
 
@@ -78,10 +61,6 @@ def test_ucm_1(page):
         # Processing Purpose Tab
         ucm.processing_purpose_tab_action_1(processing_purpose_name, processing_activity_name_1)
         expect(ucm.get_add_processing_purpose_confi_msg()).to_be_visible(timeout=15000)
-
-
-
-
 
 
 
