@@ -50,7 +50,8 @@ class DpiaPage:
         self.submit_confirmation_msg = page.get_by_text("review submitted successfully!")
         self.yes_review_btn = page.locator("button[role='radio'][value='true']")
         self.no_review_btn = page.locator("button[role='radio'][value='false']")
-        self.save_review_btn = page.locator("button:has-text('Save Review')")
+        #self.save_review_btn = page.locator("button:has-text('Save Review')")
+        self.data_protection_governance_category_txt = page.locator("span:has-text('Data Protection Governance')")
 
 
 
@@ -247,11 +248,11 @@ class DpiaPage:
             except:
                 print("Submit for review failed — retrying...")
                 attempt += 1
+                self.data_protection_governance_category_txt.click()
 
     def complete_assessment(self):
         while True:
             count = self.yes_buttons.count()
-
             for i in range(count):
                 self.yes_buttons.nth(i).click()
                 self.likelihood.nth(i).click()
@@ -260,7 +261,7 @@ class DpiaPage:
                 self.dropdown.nth(2).click()
 
             if self.submit_for_review_btn.is_visible():
-                break  # ✅ last page reached
+                break
 
             if self.next_btn.is_visible():
                 self.next_btn.click()
@@ -276,6 +277,7 @@ class DpiaPage:
             self.change_request_review()
             self.submit_btn.wait_for(state="visible", timeout=15000)
             self.submit_btn.click()
+            time.sleep(1)
             try:
                 expect(self.submit_confirmation_msg).to_be_visible(timeout=5000)
                 print("Review submitted successfully")
@@ -283,23 +285,26 @@ class DpiaPage:
             except:
                 print("Submit failed — retrying...")
                 attempt += 1
+                self.data_protection_governance_category_txt.click()
 
     def change_request_review(self):
         while True:
+
             count = self.yes_review_btn.count()
+            #print("\n total yes button",count)
 
             for i in range(count):
                 self.yes_review_btn.nth(i).click()
-                self.save_review_btn.nth(i).click()
-                time.sleep(1)
+                #self.save_review_btn.nth(i).click()
+                #time.sleep(1)
 
             if self.submit_btn.is_visible():
                 # No buttons
                 no_btn_count = self.no_review_btn.count()
                 for i in range(no_btn_count):
                     self.no_review_btn.nth(i).click()
-                    self.save_review_btn.nth(i).click()
-                    time.sleep(1)
+                    #self.save_review_btn.nth(i).click()
+                    #time.sleep(1)
                 break
 
             if self.next_btn.is_visible():
@@ -330,8 +335,8 @@ class DpiaPage:
 
             for i in range(count):
                 self.yes_review_btn.nth(i).click()
-                self.save_review_btn.nth(i).click()
-                time.sleep(1)
+                #self.save_review_btn.nth(i).click()
+                #time.sleep(1)
 
             if self.submit_btn.is_visible():
                 break

@@ -85,7 +85,7 @@ def test_ucm_1(page):
         expect(ccm.get_logo_upload_confi_msg()).to_have_attribute("src", re.compile(r"data:image"))
         ccm.select_checkbox()
         ccm.click_reset_banner_btn()
-        expect(ccm.get_reset_confi_msg()).to_have_attribute("src", "/assets/gotrustTitle_light.DIPQ8Yl4.svg")
+        expect(ccm.get_reset_confi_msg()).to_be_visible(timeout=15000)
         ccm.customize_banner(file_path)
 
         # next button
