@@ -34,7 +34,7 @@ def test_ucm_1(page):
         # verify consent collection builder button is visible
         expect(ucm.consent_collection_builder_btn).to_be_visible(timeout=15000)
 
-        # click on consent collection builder button
+        # click on consent collection builder button    
         ucm.click_consent_collection_builder_btn()
 
         # verify ucm title

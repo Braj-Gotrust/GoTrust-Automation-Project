@@ -72,8 +72,8 @@ class UcmPage:
         # step 5 - Preference Center
         self.all_consent_template_name = page.locator("table tbody tr td:first-child div")
         self.consent_template_title = page.get_by_text("Create Consent Collection Template")
-        self.preference_center_title_txt = page.get_by_label("Preference Center Title")
-        self.new_btn = page.locator("button:has-text('New')")
+        self.preference_center_title_txt = page.locator("//div[label[text()='Preference Center Title']]//input")
+        self.new_btn = page.locator("//button[normalize-space()='New']")
         self.full_screen_btn = page.locator("button:has-text('View on full screen')")
         self.cross_btn = page.locator("span:has-text('Close')")
         self.verify_input_tab = page.locator("button:has-text('Verify Input')")
@@ -584,15 +584,21 @@ class UcmPage:
 
     def enter_preference_center_title(self, preference_center_title_name:str):
         try:
-            if self.input_field_txt.nth(1).is_visible():
+            if self.preference_center_title_txt.is_visible():
                 self.input_field_txt.nth(1).fill(preference_center_title_name)
                 time.sleep(1)
                 self.next_btn.click()
             if self.new_btn.is_visible():
                 self.new_btn.click()
-                self.input_field_txt.nth(1).fill(preference_center_title_name)
+                self.preference_center_title_txt.fill(preference_center_title_name)
                 time.sleep(1)
                 self.next_btn.click()
+            time.sleep(3)
+            if self.full_screen_btn.is_visible():
+                print("page load successfully")
+                return True
+            return False
+
         except Exception as e:
             print(f" Exception while enter preference center title name : {e}")
             raise
