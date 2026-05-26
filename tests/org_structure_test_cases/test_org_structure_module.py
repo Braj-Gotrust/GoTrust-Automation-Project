@@ -90,8 +90,6 @@ def test_fill_name_desc_add_org_structure_form(setup_org_structure):
         random_data.get_description(),
         random_data.get_random_address()
 
-
-
         # Config.legal_entity_name,
         # Config.legal_entity_description,
         # Config.legal_entity_address
@@ -113,14 +111,65 @@ def test_select_country_in_org_structure_form(setup_org_structure):
     org_structure.click_select_type_dropdown()
     org_structure.click_select_legal_entity()
 
-    random_data = RandomDataUtil()
-    org_structure.select_county_in_org_structure_form(
-
-        random_data.get_legal_entity_name(),
-        random_data.get_description(),
-        random_data.get_random_address()
-    )
+    org_structure.select_county_in_org_structure_form()
     expect(org_structure.select_country_name).to_be_visible(timeout=10000)
+
+
+# ==============================
+# TEST : select industries, region and regulation name in the organization structure
+# ==============================
+
+def test_select_industries_region_and_regulation_org_structure_form(setup_org_structure):
+
+    page, org_structure = setup_org_structure
+
+    org_structure.click_structure_tab()
+    org_structure.click_plus_symbol()
+    org_structure.click_select_type_dropdown()
+    org_structure.click_select_legal_entity()
+
+    org_structure.select_industries_region_and_regulation_org_structure_form()
+    expect(org_structure.select_region_name).to_be_visible(timeout=10000)
+
+# ==============================
+# TEST : select dpo name in the organization structure
+# ==============================
+
+def test_select_dop_in_org_structure_form(setup_org_structure):
+
+    page, org_structure = setup_org_structure
+
+    org_structure.click_structure_tab()
+    org_structure.click_plus_symbol()
+    org_structure.click_select_type_dropdown()
+    org_structure.click_select_legal_entity()
+
+    org_structure.select_dop_in_org_structure_form()
+    expect(org_structure.btn_create_legal_entity).to_be_visible(timeout=10000)
+
+# ==============================
+# TEST : click risk matrix tab
+# ==============================
+
+def test_click_risk_matrix_tab_in_org_structure_form(setup_org_structure):
+
+    page, org_structure = setup_org_structure
+
+    org_structure.click_structure_tab()
+    org_structure.click_plus_symbol()
+    org_structure.click_select_type_dropdown()
+    org_structure.click_select_legal_entity()
+
+    org_structure.click_risk_matrix_tab_in_org_structure_form()
+    expect(org_structure.risk_matrix_description).to_be_visible(timeout=10000)
+
+
+
+
+
+
+
+
 
 
 # ==============================
