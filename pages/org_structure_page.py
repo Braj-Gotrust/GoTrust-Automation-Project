@@ -154,45 +154,81 @@ class OrgStructurePage:
             print(f" Exception while selecting legal entity : {e}")
             raise
 
-
     def fill_org_structure_form(self, name: str, description: str, comp_address: str):
         # fill all required details
-        self.txt_name.fill(name)
-        self.txt_description.fill(description)
-        self.txt_company_address.fill(comp_address)
+        try:
+            self.txt_name.fill(name)
+            self.txt_description.fill(description)
+            self.txt_company_address.fill(comp_address)
 
-        # click and select country
-        self.txt_country.click()
-        self.select_country_name.click()
+            # click and select country
+            self.txt_country.click()
+            self.select_country_name.click()
 
-        # click and select industries
-        self.txt_industries.click()
-        self.select_industry_name.click()
-        self.close_industry_name.click()
+            # click and select industries
+            self.txt_industries.click()
+            self.select_industry_name.click()
+            self.close_industry_name.click()
 
-        # click and select region
-        self.txt_region.click()
-        self.select_region_name.click()
+            # click and select region
+            self.txt_region.click()
+            self.select_region_name.click()
 
-        # click and select regulation
-        self.txt_regulation.click()
-        self.select_regulation_name.click()
-        self.close_regulation_name.click()
+            # click and select regulation
+            self.txt_regulation.click()
+            self.select_regulation_name.click()
+            self.close_regulation_name.click()
 
-        # click and select
-        self.txt_dpo.click()
-        self.select_dop_name.click()
+            # click and select
+            self.txt_dpo.click()
+            self.select_dop_name.click()
 
-        # click and select risk matrix and data principal category
-        self.txt_risk_matrix.click()
-        self.txt_matrix_name.fill("Matrix 1")
-        time.sleep(3)
-        self.txt_data_principal_category.click()
-        self.parent_checkboxes.nth(1).click()
-        self.checkboxes_text.nth(1).click()
-        self.child_checkboxes.nth(0).click()
-        self.child_checkboxes.nth(1).click()
-        self.child_checkboxes.nth(2).click()
+            # click and select risk matrix and data principal category
+            self.txt_risk_matrix.click()
+            self.txt_matrix_name.fill("Matrix 1")
+            time.sleep(3)
+            self.txt_data_principal_category.click()
+            self.parent_checkboxes.nth(1).click()
+            self.checkboxes_text.nth(1).click()
+            self.child_checkboxes.nth(0).click()
+            self.child_checkboxes.nth(1).click()
+            self.child_checkboxes.nth(2).click()
+        except Exception as e:
+            print(f" Exception while fill organization form details : {e}")
+            return None
+
+
+    def fill_name_des_add_in_org_structure_form(self, name: str, description: str, comp_address: str):
+        # fill all required details
+        try:
+            self.txt_name.fill(name)
+            self.txt_description.fill(description)
+            self.txt_company_address.fill(comp_address)
+        except Exception as e:
+            print(f" Exception while fill organization form details : {e}")
+            return None
+
+    def select_county_in_org_structure_form(self, name: str, description: str, comp_address: str):
+        # fill all required details
+        try:
+            self.txt_name.fill(name)
+            self.txt_description.fill(description)
+            self.txt_company_address.fill(comp_address)
+
+            # click and select country
+            self.txt_country.click()
+            self.select_country_name.click()
+        except Exception as e:
+            print(f" Exception while fill organization form details : {e}")
+            return None
+
+
+
+
+
+
+
+
 
 
     def click_create_legal_entity_button(self):
