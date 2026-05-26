@@ -21,12 +21,6 @@ def test_ucm_1(page):
     source_name = "Form"
     file_path = Config.file_path
 
-
-    processing_category_name = Config.processing_category_name
-    processing_activity_name_1 = Config.processing_activity_name_1
-    processing_activity_name_2 = Config.processing_activity_name_2
-    processing_purpose_name = Config.processing_purpose_name
-
     login_page = LoginPage(page)
     login_page.login(dpo_email, dpo_password)
 
