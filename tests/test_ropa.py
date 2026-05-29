@@ -1,3 +1,5 @@
+import time
+
 from pages.login_page import LoginPage
 from pages.logout_page import LogoutPage
 from pages.ropa_page import RopaPage
@@ -65,6 +67,7 @@ def test_ropa(page):
         expect(ropa.get_ropa_form_title()).to_be_visible(timeout=15000)
 
         # fill processing activity form
+        time.sleep(1)
         ropa.processing_activity_form(processing_activity_name,processing_activity_description,legal_entity_name)
         ropa.select_due_date(month_year,date,is_future)
 
