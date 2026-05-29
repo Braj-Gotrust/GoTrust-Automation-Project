@@ -21,9 +21,9 @@ class DpiaPage:
         self.departments_txt = page.locator("span:has-text('Select departments')")
         self.departments_dropdown = page.locator("div[role='option'] span").nth(0)
         self.close_btn = page.locator("div[role='option']:has-text('Close')")
-        self.assignee_txt = page.locator("span:has-text('Select responsible person')")
+        self.assignee_txt = page.locator("span:has-text('Select assignee')")
         self.dropdown_list = page.get_by_role("option")
-        self.reviewer_txt = page.locator("span:has-text('Select reviewer person')")
+        self.reviewer_txt = page.locator("span:has-text('Select reviewer')")
         self.save_btn = page.locator("button:has-text('Save')")
         self.create_assessment_btn = page.locator("button:has-text('Create Assessment')")
         self.create_assessment_msg = page.get_by_text("Assessment card created successfully")
@@ -63,6 +63,7 @@ class DpiaPage:
 
     def click_dpia_btn(self):
         try:
+            time.sleep(1)
             self.dpia_btn.click()
             self.dpia_btn.click()
         except Exception as e:
@@ -85,6 +86,7 @@ class DpiaPage:
             self.select_pick_date_start()
             self.select_legal_entity(legal_entity_name)
             self.select_departments()
+            time.sleep(1)
             self.select_assignee(assignee_name)
             self.select_reviewer(reviewer_name)
             self.save_btn.click()
@@ -132,6 +134,7 @@ class DpiaPage:
 
     def select_assignee(self, assignee_name:str):
         try:
+            time.sleep(1)
             self.assignee_txt.click()
             self.page.wait_for_selector("[role='option']")
             self.dropdown_list.filter(has_text=assignee_name).click()
@@ -141,6 +144,7 @@ class DpiaPage:
 
     def select_reviewer(self, reviewer_name:str):
         try:
+            time.sleep(1)
             self.reviewer_txt.click()
             self.page.wait_for_selector("[role='option']")
             self.dropdown_list.filter(has_text=reviewer_name).click()
@@ -275,9 +279,10 @@ class DpiaPage:
         attempt = 1
         while attempt <= max_attempts:
             self.change_request_review()
+            time.sleep(1)
             self.submit_btn.wait_for(state="visible", timeout=15000)
             self.submit_btn.click()
-            time.sleep(1)
+            time.sleep(3)
             try:
                 expect(self.submit_confirmation_msg).to_be_visible(timeout=5000)
                 print("Review submitted successfully")

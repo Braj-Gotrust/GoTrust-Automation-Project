@@ -24,6 +24,7 @@ class AssessmentManagementPage:
 
     def click_assessment_management_btn(self):
         try:
+            time.sleep(1)
             self.assessment_management_btn.click()
             self.assessment_management_btn.click()
         except Exception as e:
