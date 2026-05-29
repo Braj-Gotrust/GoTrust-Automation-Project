@@ -17,7 +17,7 @@ class OrgStructurePage:
 
         # form locators
         self.txt_name = self.page.get_by_placeholder("Enter Legal Entity name")
-        self.txt_description = self.page.get_by_placeholder("Brief description")
+        self.txt_description = self.page.get_by_placeholder("Description")
         self.txt_company_address = self.page.get_by_placeholder("Full company address")
 
         # Countries dropdown
@@ -44,7 +44,9 @@ class OrgStructurePage:
 
         # Risk matrix and data principal category tab
         self.txt_risk_matrix = self.page.get_by_role("tab",name="Risk Matrix")
+        self.risk_matrix_description = page.locator("p:has-text('Choose between traditional 2D matrix or advanced N-Dimensional configuration')")
         self.txt_matrix_name = self.page.get_by_placeholder("e.g., GDPR Compliance Matrix")
+        self.risk_maping_tab = page.locator("button:has-text('Risk Mapping')")
         self.txt_data_principal_category = self.page.get_by_role("tab",name="Data Principal Category")
         self.parent_checkboxes = self.page.locator(".z-20")
         self.checkboxes_text = self.page.locator(".text-sm.font-medium.text-gray-900")
@@ -62,35 +64,35 @@ class OrgStructurePage:
         self.plus_btn_title = self.page.locator(".text-center h2")
         self.select_business_unit = self.page.locator("div span:has-text('Business Unit')")
         self.business_unit_name = self.page.get_by_placeholder("Enter Business Unit name")
-        self.business_unit_description = self.page.get_by_placeholder("Brief description")
+        self.business_unit_description = self.page.get_by_placeholder("description")
         self.create_business_unit_button = self.page.locator("button:has-text('Create Business Unit')")
         self.confirmation_msg = self.page.get_by_text("Business unit created successfully")
 
         # Department locators
         self.select_department = self.page.locator("div span:has-text('Department')")
         self.department_name = self.page.get_by_placeholder("Enter Department name")
-        self.department_description = self.page.get_by_placeholder("Brief description")
+        self.department_description = self.page.get_by_placeholder("description")
         self.create_department_button = self.page.locator("button:has-text('Create Department')")
         self.department_confirmation_msg = self.page.get_by_text("Department created successfully!")
 
         # product locators
         self.select_product = self.page.locator("div span:has-text('Product')")
         self.product_name = self.page.get_by_placeholder("Enter Product name")
-        self.product_description = self.page.get_by_placeholder("Brief description")
+        self.product_description = self.page.get_by_placeholder("description")
         self.create_product_button = self.page.locator("button:has-text('Create Product')")
         self.product_confirmation_msg = self.page.get_by_text("Product created successfully!")
 
         # service locators
         self.select_service = self.page.locator("div span:has-text('Service')")
         self.service_name = self.page.get_by_placeholder("Enter Service name")
-        self.service_description = self.page.get_by_placeholder("Brief description")
+        self.service_description = self.page.get_by_placeholder("description")
         self.create_service_button = self.page.locator("button:has-text('Create Service')")
         self.service_confirmation_msg = self.page.get_by_text("Service created successfully!")
 
         # business process locators
         self.select_business_process = self.page.locator("div span:has-text('Business Process')")
         self.business_process_name = self.page.get_by_placeholder("Enter Business Process name")
-        self.business_process_description = self.page.get_by_placeholder("Brief description")
+        self.business_process_description = self.page.get_by_placeholder("description")
         self.create_business_process_button = self.page.locator("button:has-text('Create Business Process')")
         self.business_process_confirmation_msg = self.page.get_by_text("Business process created successfully!")
 
@@ -154,45 +156,146 @@ class OrgStructurePage:
             print(f" Exception while selecting legal entity : {e}")
             raise
 
-
     def fill_org_structure_form(self, name: str, description: str, comp_address: str):
         # fill all required details
-        self.txt_name.fill(name)
-        self.txt_description.fill(description)
-        self.txt_company_address.fill(comp_address)
+        try:
+            self.txt_name.fill(name)
+            self.txt_description.fill(description)
+            self.txt_company_address.fill(comp_address)
 
-        # click and select country
-        self.txt_country.click()
-        self.select_country_name.click()
+            # click and select country
+            self.txt_country.click()
+            self.select_country_name.click()
 
-        # click and select industries
-        self.txt_industries.click()
-        self.select_industry_name.click()
-        self.close_industry_name.click()
+            # click and select industries
+            self.txt_industries.click()
+            self.select_industry_name.click()
+            self.close_industry_name.click()
 
-        # click and select region
-        self.txt_region.click()
-        self.select_region_name.click()
+            # click and select region
+            self.txt_region.click()
+            self.select_region_name.click()
 
-        # click and select regulation
-        self.txt_regulation.click()
-        self.select_regulation_name.click()
-        self.close_regulation_name.click()
+            # click and select regulation
+            self.txt_regulation.click()
+            self.select_regulation_name.click()
+            self.close_regulation_name.click()
 
-        # click and select
-        self.txt_dpo.click()
-        self.select_dop_name.click()
+            # click and select
+            self.txt_dpo.click()
+            self.select_dop_name.click()
 
-        # click and select risk matrix and data principal category
-        self.txt_risk_matrix.click()
-        self.txt_matrix_name.fill("Matrix 1")
-        time.sleep(3)
-        self.txt_data_principal_category.click()
-        self.parent_checkboxes.nth(1).click()
-        self.checkboxes_text.nth(1).click()
-        self.child_checkboxes.nth(0).click()
-        self.child_checkboxes.nth(1).click()
-        self.child_checkboxes.nth(2).click()
+            # click and select risk matrix and data principal category
+            self.txt_risk_matrix.click()
+            self.txt_matrix_name.fill("Matrix 1")
+            time.sleep(3)
+            self.txt_data_principal_category.click()
+            self.parent_checkboxes.nth(1).click()
+            self.checkboxes_text.nth(1).click()
+            self.child_checkboxes.nth(0).click()
+            self.child_checkboxes.nth(1).click()
+            self.child_checkboxes.nth(2).click()
+        except Exception as e:
+            print(f" Exception while fill organization form details : {e}")
+            return None
+
+
+    def fill_name_des_add_in_org_structure_form(self, name: str, description: str, comp_address: str):
+        # fill all required details
+        try:
+            self.txt_name.fill(name)
+            self.txt_description.fill(description)
+            self.txt_company_address.fill(comp_address)
+        except Exception as e:
+            print(f" Exception while fill organization form details : {e}")
+            return None
+
+    def select_county_in_org_structure_form(self):
+        # fill all required details
+        try:
+            # click and select country
+            self.txt_country.click()
+            self.select_country_name.click()
+        except Exception as e:
+            print(f" Exception while fill organization form details : {e}")
+            return None
+
+    def select_industries_region_and_regulation_org_structure_form(self):
+        # fill all required details
+        try:
+            # click and select industries
+            self.txt_industries.click()
+            self.select_industry_name.click()
+            self.close_industry_name.click()
+
+            # click and select region
+            self.txt_region.click()
+            self.select_region_name.click()
+
+            # click and select regulation
+            self.txt_regulation.click()
+            self.select_regulation_name.click()
+            self.close_regulation_name.click()
+        except Exception as e:
+            print(f" Exception while fill organization form details : {e}")
+            return None
+
+    def select_dop_in_org_structure_form(self):
+        # fill all required details
+        try:
+            # click and select
+            self.txt_dpo.click()
+            self.select_dop_name.click()
+            time.sleep(3)
+        except Exception as e:
+            print(f" Exception while fill organization form details : {e}")
+            return None
+
+    def click_risk_matrix_tab_in_org_structure_form(self):
+        # fill all required details
+        try:
+            # click and select risk matrix and data principal category
+            self.txt_risk_matrix.click()
+        except Exception as e:
+            print(f" Exception while fill organization form details : {e}")
+            return None
+
+    def _risk_matrix_tab_in_org_structure_form(self):
+        # fill all required details
+        try:
+            # click and select risk matrix and data principal category
+            self.txt_risk_matrix.click()
+            self.txt_matrix_name.fill("Matrix 1")
+            self.risk_maping_tab.click()
+
+        except Exception as e:
+            print(f" Exception while fill organization form details : {e}")
+            return None
+
+    def _risk_matrix_tab_in_org_structure_form(self):
+        # fill all required details
+        try:
+            # click and select risk matrix and data principal category
+            self.txt_risk_matrix.click()
+            self.txt_matrix_name.fill("Matrix 1")
+            time.sleep(3)
+            self.txt_data_principal_category.click()
+            self.parent_checkboxes.nth(1).click()
+            self.checkboxes_text.nth(1).click()
+            self.child_checkboxes.nth(0).click()
+            self.child_checkboxes.nth(1).click()
+            self.child_checkboxes.nth(2).click()
+        except Exception as e:
+            print(f" Exception while fill organization form details : {e}")
+            return None
+
+
+
+
+
+
+
+
 
 
     def click_create_legal_entity_button(self):

@@ -100,6 +100,7 @@ def test_assessment_management(page):
         # REVIEWER SIGN IN
         login_page.login(reviewer_1_email, reviewer_1_password)
 
+
         # click on Assessment Management button
         assessment.click_assessment_management_btn()
 

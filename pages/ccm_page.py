@@ -36,12 +36,11 @@ class CcmPage:
         self.add_cookies_btn = page.locator("p:has-text('Add Cookies')")
         self.cookie_key_name_txt = page.locator("#cookie_key")
         self.path_txt = page.locator("#path")
-        self.all_cookies_category = page.locator("#category_id")
-        self.cookies_category_options = page.locator("#category_id option")
-        self.all_cookies_service = page.locator("#cookie_service_id")
-        self.cookies_service_options = page.locator("#cookie_service_id option")
-        self.cookie_type_txt = page.locator("#cookie_type")
-        self.cookie_regulation_txt = page.locator("#regulation_id")
+        self.select_txt = page.locator("span:has-text('Select')")
+        self.cookies_category_txt = page.locator("span:has-text('Select Cookie Category')")
+        self.cookies_service_txt = page.locator("span:has-text('Select Cookie Service')")
+        self.cookie_type_txt = page.locator("span:has-text('Select your Party')")
+        self.cookie_regulation_txt = page.locator("span:has-text('Select Cookie Regulation')")
         self.session_txt = page.locator("input[value='session']")
         self.domain_txt = page.locator("#scanned_cookie_domain")
         self.add_cookie_confi_msg = page.get_by_text("Cookie created successfully")
@@ -74,7 +73,49 @@ class CcmPage:
         # select recommendations tab
         self.recommendations_tab = page.locator("button:has-text('Recommendations')")
 
-        page.locator("button:has-text('Category')")
+        # page extend
+        self.item_per_page_txt = page.locator(".lucide.lucide-chevron-down.size-4")
+        self.all_domain_name = page.locator("tbody td:nth-child(1)")
+        self.select_domain_name_confi = page.locator("p:has-text('Cookie Configuration')")
+        # STEP:4 - User Consent Renewal
+        self.user_consent_renewal_txt = page.get_by_label("User consent renewal in months:")
+        # STEP:5 - Customize Banner
+        self.upload_logo_txt = page.locator("img[alt='Remove Logo']")
+        self.file_input_txt = page.locator("input[type='file']")
+        self.logo_upload_confi_msg = page.locator("img[alt='Uploaded Logo']")
+        self.checkbox = page.locator("button#terms")
+        self.reset_banner_txt = page.locator("button:has-text('Reset Changes')")
+        self.reset_confi_msg = page.locator("img[src='/assets/svg/gotrustTitle_light.DIPQ8Yl4.svg']")
+        self.banner_layout_1 = page.locator("img[alt='banner Wall']")
+        self.banner_layout_2 = page.locator("img[alt='banner Corner']")
+        # STEP:6 - Language Support
+        self.category_tab = page.locator("button:has-text('Category')")
+        self.service_tab = page.locator("button:has-text('Service')")
+        self.cookie_tab = page.locator("button:has-text('Cookie')")
+        self.language_btn_txt = page.locator("button[role='combobox']:nth-child(1)")
+        self.save_translation_txt = page.locator("button:has-text('Save Translation')")
+        self.change_language_confi_msg = page.get_by_text("Translation saved successfully")
+        # STEP:7 - Consent Code
+        self.banner_preview_btn = page.locator("button:has-text('Banner Preview')")
+        self.details_txt = page.locator("button:has-text('Details')")
+        self.about_txt = page.locator("button:has-text('About')")
+        self.cross_btn = page.locator("span:has-text('Close')")
+
+        # cookie policy
+        self.cookie_dictionary_tab = page.locator("button:has-text('Cookie Dictionary')")
+        self.user_guide_tab = page.locator("button:has-text('User Guide')")
+        self.analytics_tab = page.locator("button:has-text('Analytics')")
+        self.consent_records_tab = page.locator("button:has-text('Consent Records')")
+        self.cookie_policy_tab = page.locator("button:has-text('Cookie Policy')")
+        self.select_domain_txt = page.locator("button:has-text('Select Domain')")
+        self.cookie_policy_title_txt = page.get_by_placeholder("Enter cookie policy title")
+        self.introduction_txt = page.locator("h2:has-text('1. Introduction')")
+        self.add_cookie_table_btn = page.locator("button:has-text('Add cookie table')")
+        self.add_cookie_table_confi_msg = page.get_by_text("Table added successfully")
+        self.cookie_policy_create_confi_msg = page.get_by_text("Policy Created Successfully")
+
+
+
 
 
     def click_ccm_btn(self):
@@ -137,6 +178,7 @@ class CcmPage:
     def click_next_btn(self):
         try:
             self.next_btn.click()
+            time.sleep(1)
         except Exception as e:
             print(f" Exception while click on next button : {e}")
             raise
@@ -144,6 +186,7 @@ class CcmPage:
     def click_category_and_service_tab(self):
         try:
             self.category_and_service_tab.click()
+            time.sleep(1)
         except Exception as e:
             print(f" Exception while click on category and service tab : {e}")
             raise
@@ -215,6 +258,8 @@ class CcmPage:
             self.select_cookie_regulation()
             self.session_txt.click()
             self.domain_txt.fill("braj/test.com")
+            if category_name == "Essential":
+                self.switch_btn.nth(0).click()
             self.create_btn.click()
             time.sleep(1)
         except Exception as e:
@@ -223,27 +268,26 @@ class CcmPage:
 
     def select_cookie_category(self,category_name:str):
         try:
-            count = self.cookies_category_options.count()
+            self.cookies_category_txt.click()
+            count = self.dropdown.count()
             for i in range(count):
-                text = self.cookies_category_options.nth(i).inner_text().strip()
+                text = self.dropdown.nth(i).inner_text().strip()
                 if text.lower() == category_name.lower():
-                    value = self.cookies_category_options.nth(i).get_attribute("value")
-                    self.all_cookies_category.select_option(value=value)
-                    time.sleep(1)
+                    self.dropdown.nth(i).click()
                     break
         except Exception as e:
             print(f" Exception while selecting cookies category name : {e}")
             raise
 
+
     def select_cookie_service(self,service_name:str):
         try:
-            count = self.cookies_service_options.count()
+            self.cookies_service_txt.click()
+            count = self.dropdown.count()
             for i in range(count):
-                text = self.cookies_service_options.nth(i).inner_text().strip()
+                text = self.dropdown.nth(i).inner_text().strip()
                 if text.lower() == service_name.lower():
-                    value = self.cookies_service_options.nth(i).get_attribute("value")
-                    self.all_cookies_service.select_option(value=value)
-                    time.sleep(1)
+                    self.dropdown.nth(i).click()
                     break
         except Exception as e:
             print(f" Exception while selecting cookies service name : {e}")
@@ -251,14 +295,16 @@ class CcmPage:
 
     def select_cookie_type(self):
         try:
-            self.cookie_type_txt.select_option(value="first-party")
+            self.cookie_type_txt.click()
+            self.dropdown.nth(0).click()
         except Exception as e:
             print(f" Exception while selecting cookies type name : {e}")
             raise
 
     def select_cookie_regulation(self):
         try:
-            self.cookie_regulation_txt.select_option(value="121")
+            self.cookie_regulation_txt.click()
+            self.dropdown.filter(has_text="General Data Protection Regulation (GDPR)").click()
         except Exception as e:
             print(f" Exception while selecting cookies type name : {e}")
             raise
@@ -369,11 +415,226 @@ class CcmPage:
     def click_recommendations_tab(self):
         try:
             self.recommendations_tab.click()
+            time.sleep(1)
         except Exception as e:
             print(f" Exception while click on recommendations tab : {e}")
             raise
 
+    def take_user_consent_renewal(self):
+        try:
+            self.user_consent_renewal_txt.click()
+            self.dropdown.nth(20).click()
+            self.next_btn.click()
+            time.sleep(1)
+        except Exception as e:
+            print(f" Exception while taking user consent renewal : {e}")
+            raise
 
+    def select_domain(self, domain_name: str):
+        try:
+            domain_count = self.all_domain_name.count()
+            for i in range(domain_count):
+                text = self.all_domain_name.nth(i).inner_text()
+                if text == domain_name:
+                    self.all_domain_name.nth(i).click()
+                    break
+            time.sleep(1)
+        except Exception as e:
+            print(f"Exception while selecting domain name: {e}")
+            raise
+
+    def get_select_domain_name_confi(self):
+        try:
+            return self.select_domain_name_confi
+        except Exception as e:
+            print(f" Exception while fetching domain name title: {e}")
+            return None
+
+    def page_extend(self):
+        try:
+            self.item_per_page_txt.click()
+            self.dropdown.nth(4).click()
+            time.sleep(1)
+        except Exception as e:
+            print(f"Exception while page extend: {e}")
+            raise
+
+    def upload_logo(self, file_path: str):
+        try:
+            self.upload_logo_txt.click()
+            self.file_input_txt.set_input_files(file_path)
+            time.sleep(1)
+        except Exception as e:
+            print(f"Exception while uploading logo: {e}")
+            raise
+
+    def get_logo_upload_confi_msg(self):
+        try:
+            return self.logo_upload_confi_msg
+        except Exception as e:
+            print(f" Exception while fetching upload logo message successfully: {e}")
+            return None
+
+    def select_checkbox(self):
+        try:
+            self.checkbox.wait_for(state="visible")
+            if self.checkbox.get_attribute("aria-checked") != "true":
+                self.checkbox.click()
+            time.sleep(1)
+        except Exception as e:
+            print(f"Exception while selecting checkbox: {e}")
+            raise
+
+    def click_reset_banner_btn(self):
+        try:
+            self.reset_banner_txt.click()
+            time.sleep(1)
+        except Exception as e:
+            print(f"Exception while click on reset banner button: {e}")
+            raise
+
+    def get_reset_confi_msg(self):
+        try:
+            return self.reset_confi_msg.nth(0)
+        except Exception as e:
+            print(f" Exception while fetching reset confirmation message successfully: {e}")
+            return None
+
+    def customize_banner(self, file_path: str):
+        try:
+            self.upload_logo(file_path)
+            self.select_checkbox()
+            self.switch_btn.nth(2).click()
+            self.switch_btn.nth(4).click()
+            self.switch_btn.nth(5).click()
+            self.switch_btn.nth(6).click()
+            self.banner_layout_1.click()
+            self.banner_layout_2.click()
+            self.switch_btn.nth(0).click()
+        except Exception as e:
+            print(f" Exception while customization banner : {e}")
+            raise
+
+    def change_language(self):
+        try:
+            self.category_tab.click()
+            self.service_tab.click()
+            self.cookie_tab.click()
+            self.language_btn_txt.click()
+            self.dropdown.filter(has_text="Dutch").click()
+            self.save_translation_txt.click()
+        except Exception as e:
+            print(f" Exception while change language : {e}")
+            raise
+
+    def get_change_language_confi_msg(self):
+        try:
+            return self.change_language_confi_msg
+        except Exception as e:
+            print(f" Exception while getting change language confirmation successful message : {e}")
+            return None
+
+    def click_banner_preview_btn(self):
+        try:
+            self.banner_preview_btn.click()
+            # self.details_txt.click()
+            # self.about_txt.click()
+            self.cross_btn.click()
+            self.save_btn.click()
+        except Exception as e:
+            print(f" Exception while click on banner preview button : {e}")
+            raise
+
+    def click_all_cookie_policy_tab(self):
+        try:
+            self.click_banner_builder_tab()
+            self.cookie_dictionary_tab.click()
+            self.user_guide_tab.click()
+            self.analytics_tab.click()
+            self.consent_records_tab.click()
+        except Exception as e:
+            print(f" Exception while click on ccm button : {e}")
+            raise
+
+    def click_cookie_policy_tab(self):
+        try:
+            self.cookie_policy_tab.click()
+        except Exception as e:
+            print(f" Exception while click on cookie policy tab : {e}")
+            raise
+
+    def create_cookie_policy(self, domain_name: str, cookie_policy_title: str):
+        try:
+            self.create_btn.click()
+            self.select_domain_name(domain_name)
+            self.next_btn.click()
+            self.fill_details_by_keyboard_actions(cookie_policy_title)
+        except Exception as e:
+            print(f" Exception while create cookie policy : {e}")
+            raise
+
+    def select_domain_name(self, domain_name: str):
+        try:
+            self.select_domain_txt.click()
+            self.page.wait_for_selector("div[role='option']")
+            count = self.dropdown.count()
+            found = False
+            print("\ndomain count :", count)
+            for i in range(count):
+                text = self.dropdown.nth(i).inner_text()
+                if text == domain_name:
+                    print("\ndomain name :", text)
+                    self.page.wait_for_selector("div[role='option']")
+                    self.dropdown.nth(i).click()
+                    found = True
+                    break
+            if not found:
+                self.dropdown.nth(1).click()
+        except Exception as e:
+            print(f"Exception while selecting domain name : {e}")
+            raise
+
+    def fill_details_by_keyboard_actions(self, cookie_policy_title: str):
+        try:
+            self.cookie_policy_title_txt.focus()
+            self.page.keyboard.insert_text(cookie_policy_title)
+            self.page.keyboard.press("Tab")
+            self.page.keyboard.press("Enter")
+            self.dropdown.nth(0).click()
+            self.introduction_txt.click()
+            self.page.keyboard.press("Enter")
+            self.add_cookie_table_btn.click()
+        except Exception as e:
+            print(f" Exception while fill details cookie policy : {e}")
+            raise
+
+    def get_add_cookie_table_confi_msg(self):
+        try:
+            return self.add_cookie_table_confi_msg
+        except Exception as e:
+            print(f" Exception while getting add cookie table confirmation successful message : {e}")
+            return None
+
+    def click_save_change_btn(self):
+        try:
+            self.save_btn.click()
+        except Exception as e:
+            print(f" Exception while click on save change button : {e}")
+            raise
+
+    def click_close_btn(self):
+        try:
+            self.cross_btn.click()
+        except Exception as e:
+            print(f" Exception while click on close button : {e}")
+            raise
+
+    def get_cookie_policy_create_confi_msg(self):
+        try:
+            return self.cookie_policy_create_confi_msg
+        except Exception as e:
+            print(f" Exception while getting cookie policy create confirmation successful message : {e}")
+            return None
 
 
 
