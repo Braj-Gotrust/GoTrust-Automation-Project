@@ -112,6 +112,7 @@ class RopaPage:
 
     def click_ropa_registry_btn(self):
         try:
+            time.sleep(1)
             self.ropa_registry_btn.click()
             self.ropa_registry_btn.click()
         except Exception as e:
@@ -143,8 +144,10 @@ class RopaPage:
 
     def processing_activity_form(self,name:str,description:str, legal_entity_name:str):
         try:
+            time.sleep(1)
             self.processing_activity_name.fill(name)
             self.processing_activity_description.fill(description)
+            time.sleep(1)
             self.legal_entity_txt.click()
             self.select_legal_entity(legal_entity_name)
             self.department_txt.click()
@@ -360,7 +363,8 @@ class RopaPage:
             self.pii_type_txt.click()
             self.select_pii_type.click()
             self.department_collecting_data_txt.click()
-            self.depart_dropdown.nth(0).click()
+            time.sleep(1)
+            self.depart_dropdown.nth(1).click()
             self.department_process_txt.click()
             self.depart_process_dropdown.nth(1).click()
             self.close.click()
