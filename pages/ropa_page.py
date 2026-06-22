@@ -39,13 +39,14 @@ class RopaPage:
         self.ropa_title = page.locator("h3:has-text('Create Processing Activity')")
         # add collaborator
         self.add_collab_txt = page.locator("button:has-text('Collaborator')")
-        self.collaborator_popup = page.locator("h3:has-text('Create Processing Activity')")
+        self.collaborator_popup = page.locator("h3:has-text('Add Collaborator')")
 
         self.collab_dropdown_txt = page.locator("span:has-text('Select collaborators')")
         self.collaborator_list = page.locator("div[role='group'] span")
         self.close = page.locator("div[role='option']:has-text('Close')")
         self.collab_submit_btn = page.locator("//button[normalize-space()='Submit']")
-        self.collab_add_confi_msg = page.get_by_text("Collaborators added")
+        #self.collab_add_confi_msg = page.get_by_text("Collaborators added")
+        self.collab_add_confi_msg = page.get_by_text("Collaborators updated successfully")
 
         self.organization_role_txt = page.locator("span[style='pointer-events: none;'] span:has-text('Select organizational role')")
         self.select_role = page.locator("span:has-text('Fiduciary')").nth(0)
@@ -146,9 +147,11 @@ class RopaPage:
         try:
             time.sleep(1)
             self.processing_activity_name.fill(name)
-            self.processing_activity_description.fill(description)
             time.sleep(1)
+            self.processing_activity_description.fill(description)
+            time.sleep(2)
             self.legal_entity_txt.click()
+            time.sleep(1)
             self.select_legal_entity(legal_entity_name)
             self.department_txt.click()
             self.select_department.click()
@@ -177,7 +180,6 @@ class RopaPage:
         try:
             options = self.page.locator("div[role='option']")
             options.first.wait_for()
-
             target = self.page.locator(f"div[role='option']:has-text('{legal_entity_name}')")
 
             if target.count() > 0:
@@ -292,6 +294,7 @@ class RopaPage:
 
     def select_collaborator(self,collaborator_name: str):
         try:
+            time.sleep(3)
             self.collab_dropdown_txt.click()
             count = self.collaborator_list.count()
             for i in range(count):

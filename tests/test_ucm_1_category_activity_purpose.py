@@ -1,5 +1,3 @@
-import re
-
 from pages.login_page import LoginPage
 from pages.ccm_page import CcmPage
 from pages.ucm_page import UcmPage
@@ -25,7 +23,6 @@ def test_ucm_1(page):
     ucm = UcmPage(page)
 
     if True:
-
         # click on ucm lab
         ucm.click_ucm_lab_btn()
 
@@ -44,7 +41,6 @@ def test_ucm_1(page):
         ucm.select_pii_label_in_table(pii_label_name)
         ucm.click_save_btn()
         expect(ucm.get_pii_label_update_confi_msg()).to_be_visible(timeout=15000)
-
 
         # Processing Category tab
         ucm.processing_category_tab_action_1(processing_category_name)
