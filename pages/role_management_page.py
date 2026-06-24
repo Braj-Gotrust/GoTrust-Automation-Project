@@ -159,7 +159,7 @@ class RoleManagementPage:
     
                 self.no_option.click()
             # deslect the first checkbox
-            first_checkbox = self.checkboxes.nth(0)
+            first_checkbox = self.checkboxes.nth(1)
     
             first_checkbox.click()
                 
