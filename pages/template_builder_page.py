@@ -107,13 +107,9 @@ class templateBuilderPage:
         # select first checkbox
         self.checkboxes.nth(0).click()
 
-        self.template_name.fill(
-            Config.template_name
-        )
+        self.template_name.fill(Config.template_name)
 
-        self.description_input.fill(
-            Config.template_description
-        )
+        self.description_input.fill(Config.template_description)
 
         self.template_category.click()
         self.select_dropdown.click()
