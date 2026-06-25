@@ -26,6 +26,10 @@ class templateBuilderPage:
         self.template_name = page.locator("input[placeholder='Enter unique Name']" )
 
         self.description_input = page.get_by_placeholder("Enter a brief description of the template" )
+        
+        self.template_category = self.page.locator("span:text-is('Select category')")
+        
+        self.select_dropdown = page.locator('[role="option"]').nth(0)
 
         self.create_template_button = page.get_by_role( "button", name="Create Template" )
 
@@ -111,6 +115,9 @@ class templateBuilderPage:
             Config.template_description
         )
 
+        self.template_category.click()
+        self.select_dropdown.click()
+        
         self.create_template_button.click()
 
         self.add_new_question.click()
