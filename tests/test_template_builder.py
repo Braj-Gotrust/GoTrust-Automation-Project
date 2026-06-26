@@ -9,10 +9,7 @@ def test_open_template_builder(page):
     # login
     login_page = LoginPage(page)
 
-    login_page.login(
-        Config.dpo_email,
-        Config.dpo_password
-    )
+    login_page.login(Config.dpo_email, Config.dpo_password)
 
     # template builder
     template_builder = templateBuilderPage(page)

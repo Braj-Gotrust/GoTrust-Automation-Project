@@ -21,6 +21,7 @@ class UcmPage:
         self.add_processing_category_confi_msg = page.get_by_text("Processing category added successfully")
         self.item_per_page_txt = page.locator("span button[role='combobox']")
         self.dropdown = page.locator("div[role='option']")
+        self.pii_label_dropdown = page.locator("div[role='menuitem']")
         self.all_processing_category = page.locator("table tbody tr p")
         self.plus_btn = page.locator("button:has(svg.lucide-plus)")
         self.add_btn = page.locator("button:has-text('Add')")
@@ -50,7 +51,8 @@ class UcmPage:
         self.create_consent_collection_temp_btn = page.locator("button:has-text('Create Consent Collection Template')")
         # step 1 - Basic Info
         self.template_name_txt = page.locator("input[placeholder='Enter Template Name']")
-        self.unique_data_identifier_txt = page.get_by_label("Unique Data Identifier Type").or_(page.locator("span:has-text('Select')"))
+        #self.unique_data_identifier_txt = page.get_by_label("Unique Data Identifier Type").or_(page.locator("span:has-text('Select')"))
+        self.unique_data_identifier_txt = page.locator("button[aria-haspopup='dialog']")
         self.continue_btn = page.locator("button:has-text('Continue')")
         self.record_create_confirmation_msg = page.get_by_text("Record Created Successfully")
         # step 2 - Processing Purpose
@@ -80,7 +82,7 @@ class UcmPage:
         self.swap_button_order =  page.locator("button:has-text('Swap Button Order')")
         self.preference_center_tab = page.locator("button:has-text('Preference Center')")
         self.consent_preference_tab = page.locator("button:has-text('Consent Preferences')")
-        self.dsr_tab = page.locator("button:has-text('DSR')")
+        self.dsr_tab = page.locator("button:has-text('DPR')")
         self.consent_flow_tab = page.locator("button:has-text('Consent Flow')")
 
         # step 6 - Language
@@ -415,8 +417,8 @@ class UcmPage:
 
     def select_pii_label_in_list(self, pii_label_name: str):
         try:
-            self.page.wait_for_selector("[role='option']")
-            option = self.dropdown.filter(has_text=pii_label_name)
+            self.page.wait_for_selector("[role='menuitem']")
+            option = self.pii_label_dropdown.filter(has_text=pii_label_name)
             if option.is_visible():
                 option.click()
             else:
@@ -529,7 +531,7 @@ class UcmPage:
             time.sleep(2)
             self.remove_logo.click()
             time.sleep(2)
-            self.file_input.set_input_files(file_path)
+            self.file_input.nth(0).set_input_files(file_path)
         except Exception as e:
             print(f"Exception while uploading logo: {e}")
             raise
@@ -644,7 +646,7 @@ class UcmPage:
         try:
             self.consent_preference_tab.nth(1).click()
             time.sleep(1)
-            self.dsr_tab.click()
+            self.dsr_tab.nth(1).click()
             time.sleep(1)
             self.consent_flow_tab.click()
         except Exception as e:

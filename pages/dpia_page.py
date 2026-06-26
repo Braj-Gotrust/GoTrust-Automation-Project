@@ -110,7 +110,8 @@ class DpiaPage:
         try:
             self.legal_entity_txt.click()
             self.page.wait_for_selector("[role='option']")
-            option = self.legal_entity_dropdown.filter(has_text=legal_entity_name)
+            #option = self.legal_entity_dropdown.filter(has_text=legal_entity_name)
+            option = self.legal_entity_dropdown.filter(has_text=re.compile(f"^{re.escape(legal_entity_name)}$"))
 
             if option.is_visible():
                 option.click()
