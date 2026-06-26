@@ -84,13 +84,13 @@ class RoleManagementPage:
             raise
             
  
-    def create_role(self):
+    def create_role(self, role_name):
         try:
             #click on add role button
             self.add_role_btn.click()        
     
             # Fill Role Name
-            self.role_name_input.fill(Config.role_name)
+            self.role_name_input.fill(role_name)
     
             # Open Dropdown
             self.module_head_dropdown.click()
@@ -190,7 +190,6 @@ class RoleManagementPage:
             
             #click on update user button
             self.update_user.click()
-            self.role_management_menu.click()
             
         except Exception as e:
             print(f"Error in add_user: {e}")
