@@ -43,6 +43,9 @@ class RoleManagementPage:
         # message success
         self.success_message = page.locator("text='Role added successfully'")
         
+        #search role
+        self.search_role = page.locator("input[placeholder='Search']")
+        
 #view the role management page
         #see view button
         self.view_eye_button = page.get_by_alt_text( "eye icon").nth(0)
@@ -96,7 +99,7 @@ class RoleManagementPage:
             self.module_head_dropdown.click()
     
             # Select No
-            self.no_option.click()
+            self.yes_option.click()
     
         # Click All Checkboxes
             count = self.checkboxes.count()
@@ -116,6 +119,7 @@ class RoleManagementPage:
             
             #success message
             expect(self.success_message)
+            self.search_role.fill(role_name)
         except Exception as e:
             print(f"Error in create_role: {e}")
             raise
@@ -177,19 +181,13 @@ class RoleManagementPage:
             #click on assign user button
             self.assign_user_button.click()
             
-            # Click first 5 users
-            for i in range(5):
-    
-                checkbox = self.checkboxes.nth(i)
-    
-                checked = checkbox.get_attribute("aria-checked")
-    
-                if checked != "true":
-    
-                    checkbox.click()    
             
-            #click on update user button
+            checkbox = self.checkboxes.nth(0)
+            checkbox.click()
             self.update_user.click()
+        
+
+
             
         except Exception as e:
             print(f"Error in add_user: {e}")
