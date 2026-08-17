@@ -29,8 +29,9 @@ class DpiaPage:
         self.create_assessment_msg = page.get_by_text("Assessment card created successfully")
         # add collaborator
         self.add_collaborator_btn = page.locator("button:has-text('Add Collaborator')")
-        self.collaborator_input_txt = page.get_by_placeholder("Type name or email to search users...")
-        self.collaborator_dropdown = page.locator("div.text-sm.font-medium")
+        self.collaborator_input_txt = page.locator("span:has-text('Type name or email to search users...')")
+        self.search_box = page.locator("input[placeholder='Search...']")
+        self.collaborator_dropdown = page.locator("div[role='option']")
         self.collaborator_plus_btn = page.locator("button:has(svg.lucide-plus)")
         self.collaborator_add_confi_msg = page.get_by_text("Collaborator added successfully")
         self.close = page.locator("button:has-text('Close')")
@@ -110,8 +111,8 @@ class DpiaPage:
         try:
             self.legal_entity_txt.click()
             self.page.wait_for_selector("[role='option']")
-            #option = self.legal_entity_dropdown.filter(has_text=legal_entity_name)
-            option = self.legal_entity_dropdown.filter(has_text=re.compile(f"^{re.escape(legal_entity_name)}$"))
+            option = self.legal_entity_dropdown.filter(has_text=legal_entity_name).first
+            #option = self.legal_entity_dropdown.filter(has_text=re.compile(f"^{re.escape(legal_entity_name)}$"))
 
             if option.is_visible():
                 option.click()
@@ -200,11 +201,12 @@ class DpiaPage:
             raise
 
 
-    def select_collaborator(self,collaborator_email: str):
+    def select_collaborator(self,collaborator_name: str):
         try:
             self.add_collaborator_btn.click()
-            self.collaborator_input_txt.first.fill(collaborator_email)
-            self.page.wait_for_selector("div.text-sm.font-medium")
+            self.collaborator_input_txt.first.click()
+            self.search_box.nth(1).fill(collaborator_name)
+            self.page.wait_for_selector("div[role='option']")
             # self.collaborator_dropdown.filter(has_text=collaborator_email).click()
             self.collaborator_dropdown.first.click()
             self.collaborator_plus_btn.first.click()

@@ -1,3 +1,4 @@
+import time
 
 from pages.login_page import LoginPage
 from pages.template_builder_page import templateBuilderPage
@@ -16,10 +17,13 @@ def test_open_template_builder(page):
 
     template_builder.open_template_builder()
 
+    time.sleep(1)
     template_builder.basic_details_step()
 
+    time.sleep(1)
     template_builder.create_question_step()
 
+    time.sleep(1)
     template_builder.create_parent_question()
 
     # parent type

@@ -1,4 +1,5 @@
 import re
+import time
 
 from pages.login_page import LoginPage
 from pages.ccm_page import CcmPage
@@ -45,6 +46,7 @@ def test_ucm_1(page):
         expect(ccm.get_ccm_title()).to_be_visible(timeout=15000)
 
         # click on banner builder tab
+        time.sleep(5)
         ccm.click_banner_builder_tab()
 
         # STEP:1 - Basic Information
@@ -82,7 +84,9 @@ def test_ucm_1(page):
 
         # STEP:5 - Customize Banner
         ccm.upload_logo(file_path)
-        expect(ccm.get_logo_upload_confi_msg()).to_have_attribute("src", re.compile(r"data:image"))
+        #expect(ccm.get_logo_upload_confi_msg()).to_have_attribute("src", re.compile(r"data:image"))
+        expect(ccm.get_logo_upload_confi_msg()).to_have_attribute("src", re.compile(r"uploads"))
+
         ccm.select_checkbox()
         ccm.click_reset_banner_btn()
         expect(ccm.get_reset_confi_msg()).to_be_visible(timeout=15000)

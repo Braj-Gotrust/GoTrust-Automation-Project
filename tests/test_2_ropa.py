@@ -24,7 +24,7 @@ def test_ropa(page):
     reviewer_2_email = Config.reviewer_2_email
     reviewer_2_password = Config.reviewer_2_password
 
-    processing_activity_name = Config.processing_activity_name
+    processing_activity_name = Config.ropa_name
     processing_activity_description = Config.processing_activity_description
     legal_entity_name = Config.legal_entity_name
 
@@ -63,11 +63,11 @@ def test_ropa(page):
         expect(ropa.get_ropa_registry_title()).to_be_visible(timeout=15000)
 
         # click processing activity button
+        time.sleep(1)
         ropa.click_processing_activity_btn()
         expect(ropa.get_ropa_form_title()).to_be_visible(timeout=15000)
 
         # fill processing activity form
-        time.sleep(1)
         ropa.processing_activity_form(processing_activity_name,processing_activity_description,legal_entity_name)
         ropa.select_due_date(month_year,date,is_future)
 
@@ -112,6 +112,11 @@ def test_ropa(page):
         ropa.pii_tagging_section()
         # click on update data principal tagging and message
         expect(ropa.click_update_pii_tagging_btn_and_get_msg()).to_be_visible(timeout=15000)
+        time.sleep(3)
+
+        ropa.close_icon.click()
+        ropa.save_and_draft_btn.click()
+
 
         # DPO SIGN OUT
         logout_page.signout()

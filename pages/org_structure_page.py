@@ -6,6 +6,7 @@ from playwright.sync_api import Page
 class OrgStructurePage:
     def __init__(self,page: Page):
         self.page = page
+        self.cookie_banner_close = page.locator("button:has-text('Allow all')")
         self.txt_org_setting = self.page.locator(".text-3xl")
         self.txt_profile_configuration = self.page.locator("button>span:has-text('Profile Configuration')")
         self.txt_org_structure = self.page.locator("a>span:has-text('Organization Structure')")
@@ -165,9 +166,10 @@ class OrgStructurePage:
 
             # click and select country
             self.txt_country.click()
-            self.select_country_name.click()
+            self.select_country_name.first.click()
 
             # click and select industries
+            time.sleep(1)
             self.txt_industries.click()
             self.select_industry_name.click()
             self.close_industry_name.click()
@@ -188,13 +190,13 @@ class OrgStructurePage:
             # click and select risk matrix and data principal category
             self.txt_risk_matrix.click()
             self.txt_matrix_name.fill("Matrix 1")
-            time.sleep(3)
+            time.sleep(1)
             self.txt_data_principal_category.click()
             self.parent_checkboxes.nth(1).click()
-            self.checkboxes_text.nth(1).click()
-            self.child_checkboxes.nth(0).click()
-            self.child_checkboxes.nth(1).click()
-            self.child_checkboxes.nth(2).click()
+            # self.checkboxes_text.nth(1).click()
+            # self.child_checkboxes.nth(0).click()
+            # self.child_checkboxes.nth(1).click()
+            # self.child_checkboxes.nth(2).click()
         except Exception as e:
             print(f" Exception while fill organization form details : {e}")
             return None

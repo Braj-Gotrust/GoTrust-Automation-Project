@@ -190,7 +190,6 @@ class RoleManagementPage:
             
             #click on update user button
             self.update_user.click()
-            self.role_management_menu.click()
             
         except Exception as e:
             print(f"Error in add_user: {e}")
