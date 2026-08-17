@@ -13,7 +13,7 @@ class AssessmentManagementPage:
         self.assessment_management_title = page.locator("h2:has-text('Assessment Management')")
         # assessment input field locators
         self.template_category_txt = page.get_by_label("Template Category")
-        self.template_txt = page.get_by_label("Template").nth(1)
+        self.template_txt = page.locator("span:has-text('Select a template')")
         self.select_template = page.locator("div[role='option']:last-child")
         self.priority_txt = page.get_by_label("Priority ")
         self.assignee_txt = page.locator("span:has-text('Select assignee')")
@@ -25,8 +25,8 @@ class AssessmentManagementPage:
     def click_assessment_management_btn(self):
         try:
             time.sleep(1)
-            self.assessment_management_btn.click()
-            self.assessment_management_btn.click()
+            self.assessment_management_btn.first.click()
+            self.assessment_management_btn.first.click()
         except Exception as e:
             print(f" Exception while click on assessment management button : {e}")
             raise
@@ -48,6 +48,7 @@ class AssessmentManagementPage:
             self.dpia.dropdown.nth(1).click()
             self.template_txt.click()
             self.select_template.click()
+            time.sleep(1)
             self.dpia.pick_date_start_txt.click()
             self.dpia.next_month_txt.click()
             self.dpia.date_15.click()

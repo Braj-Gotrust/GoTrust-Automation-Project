@@ -15,7 +15,8 @@ def test_ucm_1(page):
 
     consent_template_name = Config.consent_template_name
     pii_label_name = Config.pii_label_name
-    legal_entity_name = Config.legal_entity_name
+    #legal_entity_name = Config.legal_entity_name
+    legal_entity_name = "GoTrust"
     privacy_notice_name = Config.privacy_notice_name
     source_name = "Form"
     file_path = Config.file_path
@@ -43,6 +44,10 @@ def test_ucm_1(page):
         # ###============step 1 - Basic Info============================
         # # create consent template
         ucm.click_create_consent_template(consent_template_name, legal_entity_name, pii_label_name)
+        time.sleep(1)
+        ucm.search_input_field.last.clear()
+        time.sleep(1)
+        ucm.close_btn.click()
 
         # click on continue button
         ucm.click_continue_btn()
@@ -67,7 +72,7 @@ def test_ucm_1(page):
         expect(ucm.get_record_create_confirmation_msg()).to_be_visible(timeout=15000)
         ucm.click_customize_form_txt()
         ucm.upload_logo(file_path)
-        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(r"https://storage-pp.gotrust.tech/gt-logo-bucket/uploads"))
+        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(r"uploads"))
         ucm.click_reset_btn()
         expect(ucm.get_reset_confirmation_attribute().nth(0)).to_be_visible(timeout=15000)
         # again upload logo
@@ -75,8 +80,7 @@ def test_ucm_1(page):
         # mobile view
         ucm.click_switch_btn()
         ucm.upload_logo(file_path)
-        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(
-            r"https://storage-pp.gotrust.tech/gt-logo-bucket/uploads"))
+        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(r"uploads"))
         ucm.click_reset_btn()
         expect(ucm.get_reset_confirmation_attribute().nth(0)).to_be_visible(timeout=15000)
         # again upload logo

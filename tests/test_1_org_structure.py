@@ -39,6 +39,9 @@ def test_organization_structure(page):
     login_page.login(dpo_email, dpo_password)
 
     if True:
+        # if org_structure.cookie_banner_close.is_visible():
+        #     org_structure.cookie_banner_close.click()
+
         # Wait for dashboard load
         profile_btn = org_structure.txt_profile_configuration
         expect(profile_btn).to_be_visible(timeout=15000)

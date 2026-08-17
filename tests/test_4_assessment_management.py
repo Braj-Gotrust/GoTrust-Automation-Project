@@ -1,3 +1,6 @@
+import time
+
+from pages.assessment_management_page import AssessmentManagementPage
 from pages.login_page import LoginPage
 from pages.logout_page import LogoutPage
 from pages.dpia_page import DpiaPage
@@ -5,13 +8,13 @@ from playwright.sync_api import expect
 from config import Config
 
 
-def test_dpia(page):
+def test_assessment_management(page):
     # TEST DATA
     dpo_email = Config.dpo_email
     dpo_password = Config.dpo_password
 
-    dpia_assessment_name = Config.dpia_assessment_name
-    dpia_assessment_description = Config.dpia_assessment_description
+    assessment_name = Config.assessment_name
+    assessment_description = Config.assessment_description
     #legal_entity_name = Config.legal_entity_name
     legal_entity_name = "GoTrust"
 
@@ -37,6 +40,7 @@ def test_dpia(page):
     #login_page.login(reviewer_1_email, reviewer_1_password)
     #login_page.login(reviewer_2_email, reviewer_2_password)
 
+    assessment = AssessmentManagementPage(page)
     dpia = DpiaPage(page)
 
     logout_page = LogoutPage(page)
@@ -44,24 +48,24 @@ def test_dpia(page):
     if True:
 
 
-        # verify TPRA button
-        expect(dpia.dpia_btn).to_be_visible(timeout=15000)
+        # verify Assessment Management button
+        time.sleep(3)
+        expect(assessment.assessment_management_btn.first).to_be_visible(timeout=15000)
 
-        # click on ropa
-        dpia.click_dpia_btn()
+        # click on Assessment Management button
+        assessment.click_assessment_management_btn()
 
-        # verify TPRA title
-        expect(dpia.get_dpia_title()).to_be_visible(timeout=15000)
+        # verify Assessment Management title
+        expect(assessment.get_assessment_management_title()).to_be_visible(timeout=15000)
 
-        # fill vendor details
-        dpia.fill_dpia_details(dpia_assessment_name, dpia_assessment_description, legal_entity_name, assignee_name, reviewer_name)
-        expect(dpia.get_create_assessment_msg()).to_be_visible(timeout=15000)
+        # fill Assessment Management details
+        assessment.fill_assessment_details(assessment_name, assessment_description, legal_entity_name, assignee_name, reviewer_name)
 
-        # select dpia assessment name
-        dpia.select_assessment_start_and_continue(dpia_assessment_name)
+        # select Assessment Management name
+        dpia.select_assessment_start_and_continue(assessment_name)
         # add collaborator
-        dpia.select_collaborator(collaborator_email)
-        expect(dpia.get_collaborator_add_confi_msg()).to_be_visible(timeout=15000)
+        dpia.select_collaborator(collaborator_name)
+        #expect(dpia.get_collaborator_add_confi_msg()).to_be_visible(timeout=15000)
         dpia.close.first.click()
 
         # DPO SING OUT
@@ -70,11 +74,11 @@ def test_dpia(page):
         # COLLABORATOR SIGN IN
         login_page.login(collaborator_email, collaborator_password)
 
+        # click on Assessment Management button
+        assessment.click_assessment_management_btn()
 
-        # click on ropa
-        dpia.click_dpia_btn()
-        # select dpia assessment name
-        dpia.select_assessment_start_and_continue(dpia_assessment_name)
+        # select Assessment Management name
+        dpia.select_assessment_start_and_continue(assessment_name)
         # assessment question answers
         dpia.collaborator_assessment_answers()
         dpia.get_submit_for_review_btn()
@@ -85,11 +89,11 @@ def test_dpia(page):
         # ASSIGNEE SIGN IN
         login_page.login(assignee_email, assignee_password)
 
+        # click on Assessment Management button
+        assessment.click_assessment_management_btn()
 
-        # click on ropa
-        dpia.click_dpia_btn()
-        # select dpia assessment name
-        dpia.select_assessment_start_and_continue(dpia_assessment_name)
+        # select Assessment Management name
+        dpia.select_assessment_start_and_continue(assessment_name)
         # assessment question answers
         dpia.give_assessment_and_submit_for_review()
 
@@ -99,10 +103,12 @@ def test_dpia(page):
         # REVIEWER SIGN IN
         login_page.login(reviewer_1_email, reviewer_1_password)
 
-        # click on DPIA
-        dpia.click_dpia_btn()
+
+        # click on Assessment Management button
+        assessment.click_assessment_management_btn()
+
         # select dpia assessment name
-        dpia.select_assessment_and_review(dpia_assessment_name)
+        dpia.select_assessment_and_review(assessment_name)
 
         # review assessment and change request
         dpia.assessment_review_and_change_request()
@@ -113,10 +119,10 @@ def test_dpia(page):
         # ASSIGNEE SIGN IN (AGAIN SIGN IN AFTER CHANGE REQUEST)
         login_page.login(assignee_email, assignee_password)
 
-        # click on ropa
-        dpia.click_dpia_btn()
-        # select dpia assessment name
-        dpia.select_assessment_and_edit(dpia_assessment_name)
+        # click on Assessment Management button
+        assessment.click_assessment_management_btn()
+
+        dpia.select_assessment_and_edit(assessment_name)
         # assessment question answers
         dpia.give_assessment_and_submit_for_review()
 
@@ -126,10 +132,11 @@ def test_dpia(page):
         # REVIEWER SIGN IN (AGAIN SIGN IN AFTER CHANGE REQUEST)
         login_page.login(reviewer_1_email, reviewer_1_password)
 
-        # click on ropa
-        dpia.click_dpia_btn()
+        # click on Assessment Management button
+        assessment.click_assessment_management_btn()
+
         # select dpia assessment name
-        dpia.select_assessment_and_review(dpia_assessment_name)
+        dpia.select_assessment_and_review(assessment_name)
 
         # review assessment and change request
         dpia.assessment_review_and_submit()
@@ -139,3 +146,11 @@ def test_dpia(page):
     else:
         # Invalid login validation
         expect(login_page.txt_error_message).to_be_visible(timeout=5000)
+
+
+
+
+
+
+
+

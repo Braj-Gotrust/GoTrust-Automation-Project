@@ -14,7 +14,8 @@ class UcmPage:
         self.save_btn = page.locator("button:has-text('Save')")
         self.pii_label_update_confi_msg = page.get_by_text("PII label updated successfully")
         # processing category tab
-        self.processing_category_tab = page.locator("a:has-text('Processing Category')")
+        #self.processing_category_tab = page.locator("a:has-text('Processing Category')")
+        self.processing_category_tab = page.locator("a:has-text('Processing Categories')")
         self.add_processing_category_btn = page.locator("button:has-text('Add Processing Category')")
         self.name_txt = page.locator("#name, #pp-name")
         self.description_txt = page.locator("#description, #pp-description, .tiptap")
@@ -78,6 +79,7 @@ class UcmPage:
         self.new_btn = page.locator("//button[normalize-space()='New']")
         self.full_screen_btn = page.locator("button:has-text('View on full screen')")
         self.cross_btn = page.locator("span:has-text('Close')")
+        self.close_btn = page.locator("div[data-value='Close']")
         self.verify_input_tab = page.locator("button:has-text('Verify Input')")
         self.swap_button_order =  page.locator("button:has-text('Swap Button Order')")
         self.preference_center_tab = page.locator("button:has-text('Preference Center')")
@@ -99,7 +101,8 @@ class UcmPage:
         self.download_btn = page.locator("button:has-text('Download Guide')")
         self.download_title_txt = page.locator("h2:has-text('Download Integration Guide')")
         self.download_cross_btn = page.locator("button:has(svg.lucide-x)")
-        ucm_title = page.locator("a:has-text('Universal Consent Management')")
+        self.ucm_title = page.locator("a:has-text('Universal Consent Management')")
+        self.search_input_field = page.locator("input[placeholder^='Search']")
 
 
     def click_code_snippets_page_tab(self):
@@ -209,7 +212,7 @@ class UcmPage:
 
     def processing_category_tab_action_1(self, processing_category_name:str):
         try:
-            self.processing_category_tab.nth(1).click()
+            self.processing_category_tab.click()
             self.add_processing_category_btn.click()
             self.fill_name_and_description(processing_category_name)
             self.save_btn.click()
@@ -232,15 +235,6 @@ class UcmPage:
             print(f" Exception while add processing category confirmation message : {e}")
             return None
 
-    def processing_category_tab_action_2(self, processing_category_name:str, processing_activity_name_1:str):
-        try:
-            self.page_extend()
-            self.select_processing_category_in_table(processing_category_name)
-            self.fill_name_and_description(processing_activity_name_1)
-            self.add_btn.nth(1).click()
-        except Exception as e:
-            print(f" Exception while perform processing category actions : {e}")
-            raise
 
     def page_extend(self):
         try:
@@ -270,11 +264,11 @@ class UcmPage:
             print(f" Exception while getting add processing activity confirmation message 1 : {e}")
             return None
 
-    def processing_activity_tab_action_1(self,processing_activity_name_2:str, processing_category_name:str):
+    def processing_activity_tab_action_1(self,processing_activity_name:str, processing_category_name:str):
         try:
             self.processing_activity_tab.nth(1).click()
             self.add_processing_activities_btn.click()
-            self.fill_name_and_description(processing_activity_name_2)
+            self.fill_name_and_description(processing_activity_name)
             time.sleep(1)
             self.select_processing_category_in_list(processing_category_name)
             self.save_btn.click()
@@ -302,13 +296,13 @@ class UcmPage:
             print(f" Exception while getting add processing activity confirmation message 2 : {e}")
             return None
 
-    def processing_purpose_tab_action_1(self, processing_purpose_name:str, processing_activity_name_1:str):
+    def processing_purpose_tab_action_1(self, processing_purpose_name:str, processing_activity_name:str):
         try:
             self.processing_purpose_tab.nth(1).click()
             self.add_processing_purpose_btn.click()
             self.fill_name_and_description(processing_purpose_name)
             time.sleep(1)
-            self.select_processing_activity(processing_activity_name_1)
+            self.select_processing_activity(processing_activity_name)
             self.expiry_days_clear_txt.clear()
             self.expiry_days_fill_txt.fill("7")
             self.save_btn.click()
@@ -316,13 +310,13 @@ class UcmPage:
             print(f" Exception while perform processing purpose tab action 1 : {e}")
             raise
 
-    def select_processing_activity(self, processing_activity_name_1:str):
+    def select_processing_activity(self, processing_activity_name:str):
         try:
             self.select_txt.click()
             count = self.dropdown.count()
             for i in range(count):
                 text = self.dropdown.nth(i).inner_text().strip()
-                if text.lower() == processing_activity_name_1.lower():
+                if text.lower() == processing_activity_name.lower():
                     self.dropdown.nth(i).click()
                     break
         except Exception as e:
@@ -410,22 +404,67 @@ class UcmPage:
             self.dropdown.nth(1).click()
             # select unique data identifier
             self.unique_data_identifier_txt.first.click()
-            self.select_pii_label_in_list(pii_label_name)
+            time.sleep(1)
+            self.select_multiple_pii(pii_label_name)
         except Exception as e:
             print(f" Exception while click on pii inventory button : {e}")
             raise
 
-    def select_pii_label_in_list(self, pii_label_name: str):
+    # def select_pii_label_in_list(self, pii_label_name: str):
+    #     try:
+    #         time.sleep(1)
+    #         self.search_input_field.last.fill("Phone Number")
+    #         self.pii_label_dropdown.nth(1).click()
+    #         time.sleep(1)
+    #         self.search_input_field.last.clear()
+    #         time.sleep(1)
+    #         self.close_btn.click()
+    #     except Exception as e:
+    #         print(f"Exception while selecting pii label name: {e}")
+    #         raise
+
+    def select_multiple_pii(self, pii_label_name: str):
         try:
-            self.page.wait_for_selector("[role='menuitem']")
-            option = self.pii_label_dropdown.filter(has_text=pii_label_name)
-            if option.is_visible():
-                option.click()
-            else:
-                print(f" {pii_label_name} is not found")
+            time.sleep(1)
+            self.page.wait_for_selector("[role='option']")
+            self.search_input_field.last.fill("Phone Number")
+            count = self.dropdown.count()
+            for i in range(count):
+                text = self.dropdown.nth(i).inner_text()
+                if text == pii_label_name:
+                    self.dropdown.nth(i).click()
+                    time.sleep(3)
+                    break
         except Exception as e:
             print(f"Exception while selecting pii label name: {e}")
             raise
+
+    def select_pii(self, pii_label_name: str):
+        try:
+            time.sleep(1)
+            self.page.wait_for_selector("[role='menuitem']")
+            self.search_input_field.last.fill("Phone Number")
+            count = self.pii_label_dropdown.count()
+            for i in range(count):
+                text = self.pii_label_dropdown.nth(i).inner_text()
+                if text == pii_label_name:
+                    self.pii_label_dropdown.nth(i).click()
+                    break
+        except Exception as e:
+            print(f"Exception while selecting pii label name: {e}")
+            raise
+
+    # def select_pii_label_in_list(self, pii_label_name: str):
+    #     try:
+    #         self.page.wait_for_selector("[role='menuitem']")
+    #         option = self.pii_label_dropdown.filter(has_text=pii_label_name)
+    #         if option.is_visible():
+    #             option.click()
+    #         else:
+    #             print(f" {pii_label_name} is not found")
+    #     except Exception as e:
+    #         print(f"Exception while selecting pii label name: {e}")
+    #         raise
 
     def click_continue_btn(self):
         try:
@@ -450,7 +489,8 @@ class UcmPage:
             self.add_btn.nth(1).click()
             # select pii label
             self.select_txt.nth(0).click()
-            self.select_pii_label_in_list(pii_label_name)
+            time.sleep(1)
+            self.select_pii(pii_label_name)
             self.save_btn.nth(1).click()
             time.sleep(3)
             self.save_btn.nth(0).click()

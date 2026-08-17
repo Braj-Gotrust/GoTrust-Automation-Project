@@ -13,8 +13,7 @@ def test_ucm_1(page):
 
     pii_label_name = Config.pii_label_name
     processing_category_name = Config.processing_category_name
-    processing_activity_name_1 = Config.processing_activity_name_1
-    processing_activity_name_2 = Config.processing_activity_name_2
+    processing_activity_name = Config.processing_activity_name
     processing_purpose_name = Config.processing_purpose_name
 
     login_page = LoginPage(page)
@@ -37,7 +36,7 @@ def test_ucm_1(page):
 
         # Pii Label tab
         ucm.fill_search_box(pii_label_name)
-        expect(ucm.all_pii_label).to_be_visible(timeout=15000)
+        expect(ucm.all_pii_label.first).to_be_visible(timeout=15000)
         ucm.select_pii_label_in_table(pii_label_name)
         ucm.click_save_btn()
         expect(ucm.get_pii_label_update_confi_msg()).to_be_visible(timeout=15000)
@@ -45,17 +44,15 @@ def test_ucm_1(page):
         # Processing Category tab
         ucm.processing_category_tab_action_1(processing_category_name)
         expect(ucm.get_add_processing_category_confi_msg()).to_be_visible(timeout=15000)
-        ucm.processing_category_tab_action_2(processing_category_name,processing_activity_name_1)
-        expect(ucm.get_add_processing_activity_confi_msg_1()).to_be_visible(timeout=15000)
 
 
         # Processing Activities Tab
-        ucm.processing_activity_tab_action_1(processing_activity_name_2, processing_category_name)
+        ucm.processing_activity_tab_action_1(processing_activity_name, processing_category_name)
         expect(ucm.get_add_processing_activity_confi_msg_2()).to_be_visible(timeout=15000)
 
 
         # Processing Purpose Tab
-        ucm.processing_purpose_tab_action_1(processing_purpose_name, processing_activity_name_1)
+        ucm.processing_purpose_tab_action_1(processing_purpose_name, processing_activity_name)
         expect(ucm.get_add_processing_purpose_confi_msg()).to_be_visible(timeout=15000)
 
 

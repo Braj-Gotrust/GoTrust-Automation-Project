@@ -9,7 +9,7 @@ class LoginPage:
     # constructor
     def __init__(self,page: Page):
         self.page = page
-
+        self.cookie_banner_close = page.locator("button:has-text('Allow all')")
         # locators
         self.txt_email_address = self.page.locator("#username")
         self.txt_password = self.page.locator("#password")
@@ -42,6 +42,15 @@ class LoginPage:
             print(f" Exception while click login button: {e}")
             raise
 
+    def click_cookie_banner_close_btn(self):
+        # Click the login button.
+        try:
+            if self.cookie_banner_close.is_visible():
+                self.cookie_banner_close.click()
+        except Exception as e:
+            print(f" Exception while click on cookie banner close button: {e}")
+            raise
+
     def login(self, email: str, password: str):
         """
         Perform the complete login operation:
@@ -52,6 +61,11 @@ class LoginPage:
         self.set_email(email)
         self.set_password(password)
         self.click_login()
+        self.page.wait_for_timeout(5000)
+        self.click_cookie_banner_close_btn()
+
+        # if self.cookie_banner_close.is_visible():
+        #     self.cookie_banner_close.click()
 
     def get_login_error(self):
         # Return the error message element if login fails.

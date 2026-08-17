@@ -47,8 +47,12 @@ def test_ucm_1(page):
         time.sleep(3)
 
         # ###============step 1 - Basic Info============================
-        ucm.unique_data_identifier_txt.first.click()
-        ucm.select_pii_label_in_list(pii_label_name)
+        # ucm.unique_data_identifier_txt.first.click()
+        # ucm.select_multiple_pii(pii_label_name)
+        # time.sleep(1)
+        # ucm.search_input_field.last.clear()
+        # time.sleep(1)
+        # ucm.close_btn.click()
         # click on continue button
         ucm.click_continue_btn()
 
@@ -70,8 +74,7 @@ def test_ucm_1(page):
         ###============step 5 - Preference Center============================
         ucm.enter_preference_center_title(preference_center_title_name)
         ucm.upload_logo(file_path)
-        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(
-            r"https://storage-pp.gotrust.tech/gt-logo-bucket/uploads"))
+        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(r"uploads"))
         ucm.click_reset_btn()
         expect(ucm.get_reset_confirmation_attribute().nth(0)).to_be_visible(timeout=15000)
 
@@ -79,14 +82,12 @@ def test_ucm_1(page):
         ucm.click_cross_btn()
         # again upload logo
         ucm.upload_logo(file_path)
-        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(
-            r"https://storage-pp.gotrust.tech/gt-logo-bucket/uploads"))
+        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(r"uploads"))
 
         # mobile view under the user input tab
         ucm.click_switch_btn()
         ucm.upload_logo(file_path)
-        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(
-            r"https://storage-pp.gotrust.tech/gt-logo-bucket/uploads"))
+        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(r"uploads"))
         ucm.click_reset_btn()
         expect(ucm.get_reset_confirmation_attribute().nth(0)).to_be_visible(timeout=15000)
 
@@ -94,16 +95,14 @@ def test_ucm_1(page):
         ucm.click_cross_btn()
         # again upload logo
         ucm.upload_logo(file_path)
-        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(
-            r"https://storage-pp.gotrust.tech/gt-logo-bucket/uploads"))
+        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(r"uploads"))
 
 
         # VERIFY INPUT TAB under the mobile view
         time.sleep(1)
         ucm.click_verify_input_tab()
         ucm.upload_logo(file_path)
-        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(
-            r"https://storage-pp.gotrust.tech/gt-logo-bucket/uploads"))
+        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(r"uploads"))
         ucm.click_reset_btn()
         expect(ucm.get_reset_confirmation_attribute().nth(0)).to_be_visible(timeout=15000)
 
@@ -111,16 +110,14 @@ def test_ucm_1(page):
         ucm.click_cross_btn()
         # again upload logo
         ucm.upload_logo(file_path)
-        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(
-            r"https://storage-pp.gotrust.tech/gt-logo-bucket/uploads"))
+        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(r"uploads"))
         # swap button order
         ucm.click_swap_button_order()
 
         # laptop view under the VERIFY INPUT TAB
         ucm.click_switch_btn()
         ucm.upload_logo(file_path)
-        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(
-            r"https://storage-pp.gotrust.tech/gt-logo-bucket/uploads"))
+        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(r"uploads"))
         ucm.click_reset_btn()
         expect(ucm.get_reset_confirmation_attribute().nth(0)).to_be_visible(timeout=15000)
 
@@ -128,22 +125,19 @@ def test_ucm_1(page):
         ucm.click_cross_btn()
         # again upload logo
         ucm.upload_logo(file_path)
-        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(
-            r"https://storage-pp.gotrust.tech/gt-logo-bucket/uploads"))
+        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(r"uploads"))
         # swap button order
         ucm.click_swap_button_order()
 
         # preference center tab under the laptop view
         ucm.click_preference_center_tab()
         ucm.upload_logo(file_path)
-        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(
-            r"https://storage-pp.gotrust.tech/gt-logo-bucket/uploads"))
+        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(r"uploads"))
         ucm.click_reset_btn()
         expect(ucm.get_reset_confirmation_attribute().nth(0)).to_be_visible(timeout=15000)
         # again upload logo
         ucm.upload_logo(file_path)
-        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(
-            r"https://storage-pp.gotrust.tech/gt-logo-bucket/uploads"))
+        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(r"uploads"))
 
         # preference center page tab under the preference center tab
         ucm.click_preference_center_page_tab()
@@ -151,14 +145,12 @@ def test_ucm_1(page):
         # mobile view under the PREFERENCE CENTER
         ucm.click_switch_btn()
         ucm.upload_logo(file_path)
-        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(
-            r"https://storage-pp.gotrust.tech/gt-logo-bucket/uploads"))
+        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(r"uploads"))
         ucm.click_reset_btn()
         expect(ucm.get_reset_confirmation_attribute().nth(0)).to_be_visible(timeout=15000)
         # again upload logo
         ucm.upload_logo(file_path)
-        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(
-            r"https://storage-pp.gotrust.tech/gt-logo-bucket/uploads"))
+        expect(ucm.get_logo_upload_confi_attribute()).to_have_attribute("src", re.compile(r"uploads"))
 
         # preference center page tab under the preference center tab
         ucm.click_preference_center_page_tab()

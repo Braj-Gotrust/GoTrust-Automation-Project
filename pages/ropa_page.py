@@ -15,7 +15,7 @@ class RopaPage:
         self.legal_entity_txt = page.locator("span:has-text('Select legal entity')").nth(0)
         self.legal_entity_dropdown = page.locator("div[role='presentation'] span span")
         self.department_txt = page.locator("span:has-text('Select department')")
-        self.select_department = page.locator("div[role='option'] span span").nth(0)
+        self.select_department = page.locator("div[role='option'] span span")
         self.due_date = page.locator("div.mt-2 button[aria-haspopup='dialog']")
         self.current_month_year = page.locator("div[aria-live='polite']")
         self.next_month = page.locator("button[name='next-month']")
@@ -61,16 +61,18 @@ class RopaPage:
         self.data_principal_txt = page.locator("span:has-text('Select Data Principal')")
         self.data_principal_list = page.locator("div[role='group'] span")
         self.countries_txt = page.locator("span:has-text('Select Country')")
-        self.select_country = page.locator("span:has-text('India')").nth(1)
+        self.select_country = page.locator("span:has-text('India')")
+        self.search_input_field = page.locator("input[placeholder^='Search']")
         self.update_data_principal_tagging_msg = page.get_by_text("Data Principal updated successfull")
 
         # pii tagging section
         self.pii_tagging_txt = page.locator("span:has-text('PII Tagging')")
-        self.pii_type_txt = page.locator("span span:has-text('Select PII type')")
-        self.select_pii_type = page.locator("span span:has-text('EMAIL ADDRESS')")
-        self.department_collecting_data_txt = page.locator("button[role='combobox'] span span:has-text('Select Department')")
+        self.pii_type_txt = page.locator("span:has-text('Select PII type')")
+        self.search_box = page.locator("input[placeholder='Search']")
+        self.select_pii_type = page.locator("span:has-text('EMAIL ADDRESS')")
+        self.department_collecting_data_txt = page.locator("button[role='combobox'] span span:has-text('Select department')")
         self.depart_dropdown = page.locator("div[role='option'] span:nth-child(2)")
-        self.department_process_txt = page.locator("span span:has-text('Select Department')")
+        self.department_process_txt = page.locator("span span:has-text('Select department')")
         self.depart_process_dropdown = page.locator("div[role='option'] span")
         self.source_of_personal_data_txt = page.get_by_placeholder("e.g., User provided, Third-party, Public records")
         self.personal_data_collection_txt = page.get_by_placeholder("e.g., Web form, API, CSV upload")
@@ -84,7 +86,7 @@ class RopaPage:
         self.edit_ropa_btn = page.get_by_role("menuitem", name="Edit")
         self.edit_ropa_page_title = page.locator("h3:has-text('Create Processing Activity')")
 
-        # Legal basis section
+        # Grounds for Processing Personal Data section
         self.legal_basis_txt = page.locator("span:has-text('Grounds for Processing Personal Data')")
         #self.legal_basis_for_india_txt = page.locator("span:has-text('Legal Basis for India')")
         self.checkbox_label = page.locator("label:has-text('Personal data voluntarily provided')")
@@ -94,6 +96,7 @@ class RopaPage:
         self.critical_msg = page.get_by_text("Sensitivity set to CRITICAL")
         self.second_yes_button = page.locator(".inline-flex.items-center.gap-2 span:has-text('Yes')").nth(1)
         self.third_yes_button = page.locator(".inline-flex.items-center.gap-2 span:has-text('Yes')").nth(2)
+        self.fifth_yes_button = page.locator(".inline-flex.items-center.gap-2 span:has-text('Yes')").nth(4)
         self.legal_basis_update_msg = page.get_by_text("Grounds for Processing Personal Data updated successfully.")
         # click on submit button
         self.collab_submit_for_review_btn = page.locator("button:has-text('Submit')")
@@ -106,6 +109,9 @@ class RopaPage:
         self.reviewer_add_comment = page.get_by_placeholder("Comment (required)")
         self.reviewer_submit_comment = page.locator("button:has-text('Submit')")
         self.reviewer_acknowledge_msg = page.get_by_text("Reviewer action submitted")
+
+        self.close_icon = page.locator("button:has-text('×')")
+        self.save_and_draft_btn = page.locator("button:has-text('Save as Draft')")
 
 
 
@@ -149,12 +155,13 @@ class RopaPage:
             self.processing_activity_name.fill(name)
             time.sleep(1)
             self.processing_activity_description.fill(description)
-            time.sleep(2)
+            time.sleep(1)
             self.legal_entity_txt.click()
             time.sleep(1)
             self.select_legal_entity(legal_entity_name)
-            self.department_txt.click()
-            self.select_department.click()
+            self.department_txt.first.click()
+            self.select_department.first.click()
+            time.sleep(1)
         except Exception as e:
             print(f" Exception while filling processing activity form: {e}")
             return None
@@ -195,6 +202,7 @@ class RopaPage:
     def select_due_date(self,target_month_year:str, target_date:str, is_future:bool):
         try:
             self.due_date.click()
+            time.sleep(3)
             all_dates = self.dates.all()
             while True:
                 current_month_year = self.current_month_year.inner_text()
@@ -215,7 +223,7 @@ class RopaPage:
 
     def select_assignee(self,assignee_name:str):
         try:
-            self.assignee_txt.click()
+            self.assignee_txt.first.click()
             count = self.assignee_list.count()
             for i in range(count):
                 text = self.assignee_list.nth(i).inner_text()
@@ -294,7 +302,7 @@ class RopaPage:
 
     def select_collaborator(self,collaborator_name: str):
         try:
-            time.sleep(3)
+            time.sleep(1)
             self.collab_dropdown_txt.click()
             count = self.collaborator_list.count()
             for i in range(count):
@@ -343,9 +351,11 @@ class RopaPage:
             self.data_principal_txt.click()
             self.data_principal_list.nth(0).click()
             self.close.click()
+            time.sleep(1)
             self.countries_txt.click()
-            self.select_country.click()
-            self.close.click()
+            self.search_input_field.last.fill("India ")
+            self.select_country.last.click()
+            #self.close.click()
 
         except Exception as e:
             print(f" Exception while selecting data principal tagging section : {e}")
@@ -364,10 +374,11 @@ class RopaPage:
         try:
             self.pii_tagging_txt.click()
             self.pii_type_txt.click()
+            self.search_box.fill("EMAIL ADDRESS")
             self.select_pii_type.click()
             self.department_collecting_data_txt.click()
             time.sleep(1)
-            self.depart_dropdown.nth(1).click()
+            self.depart_dropdown.first.click()
             self.department_process_txt.click()
             self.depart_process_dropdown.nth(1).click()
             self.close.click()
@@ -430,6 +441,7 @@ class RopaPage:
                 expect(self.critical_msg).to_be_visible(timeout=10000)
             self.second_yes_button.click()
             self.third_yes_button.click()
+            self.fifth_yes_button.click()
         except Exception as e:
             print(f" Exception while clicking processing activity button : {e}")
             raise

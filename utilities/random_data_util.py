@@ -57,7 +57,7 @@ class RandomDataUtil:
 
     # Legal Entity Name
     def get_legal_entity_name(self) -> str:
-        return f"LegalEntity_{self.faker.company()}_{random.randint(100, 999)}"
+        return f"AT_{self.faker.company()}_{random.randint(100, 999)}"
 
     # Description
     def get_description(self) -> str:
@@ -65,7 +65,7 @@ class RandomDataUtil:
 
     # Business Unit Name
     def get_business_unit_name(self) -> str:
-        return f"BusinessUnit_{self.faker.bs().split()[0].capitalize()}_{random.randint(100, 999)}"
+        return f"AT_{self.faker.bs().split()[0].capitalize()}_{random.randint(100, 999)}"
 
     # Department Name
     def get_department_name(self) -> str:
@@ -73,15 +73,15 @@ class RandomDataUtil:
             "HR", "Finance", "IT", "Marketing",
             "Sales", "Operations", "Compliance"
         ]
-        return f"Department_{random.choice(departments)}_{random.randint(100, 999)}"
+        return f"AT_{random.choice(departments)}_{random.randint(100, 999)}"
 
     # Product Name
     def get_product_name(self) -> str:
-        return f"Product_{self.faker.word().capitalize()}_{random.randint(1000, 9999)}"
+        return f"AT_{self.faker.word().capitalize()}_{random.randint(1000, 9999)}"
 
     # Service Name
     def get_service_name(self) -> str:
-        return f"Service_{self.faker.catch_phrase().replace(' ', '_')}_{random.randint(100, 999)}"
+        return f"AT_{self.faker.catch_phrase()}_{random.randint(100, 999)}"
 
     # Business Process Name
     def get_business_process_name(self) -> str:
@@ -93,4 +93,4 @@ class RandomDataUtil:
             "Vendor_Management",
             "Data_Collection"
         ]
-        return f"Process_{random.choice(processes)}_{random.randint(100, 999)}"
+        return f"AT_{random.choice(processes)}_{random.randint(100, 999)}"
